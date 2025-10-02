@@ -1,7 +1,12 @@
 const bcrypt = require('bcrypt')
 const User = require('../models/User.js')
 
-const registerUser = async (req, res) => {
+
+exports.auth_signup_get = async (req,res) => {
+  res.render("auth/sign-up.ejs")
+}
+
+exports.auth_signup_post = async (req, res) => {
   try {
     const userInDatabase = await User.exists({ email: req.body.email })
 
@@ -30,7 +35,11 @@ const registerUser = async (req, res) => {
   }
 }
 
-const signInUser = async (req, res) => {
+exports.auth_signin_get = async (req,res) => {
+  res.render("auth/sign-in.ejs")
+}
+
+exports.auth_signin_post = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email })
     if (!user) {
@@ -50,17 +59,3 @@ const signInUser = async (req, res) => {
   }
 }
 
-const signOutUser = (req, res) => {
-  try {
-    req.session.destroy()
-    res.redirect('/')
-  } catch (error) {
-    console.error('An error has occurred signing out a user!', error.message)
-  }
-}
-
-module.exports = {
-  registerUser,
-  signInUser,
-  signOutUser
-}
