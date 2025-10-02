@@ -13,39 +13,42 @@ const tvSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  genre: {
-    type: [Object],
-    required: true,
-  },
+  genre: [
+    {
+      type: Object,
+      required: true,
+    },
+  ],
   duration: {
     type: Number,
     required: true,
   },
   poster: {
     type: String,
-    required: true
+    required: true,
   },
   language: {
     type: String,
-    required: true
+    required: true,
   },
   status: {
     type: String,
-    required: true
+    required: true,
   },
-  seasons: {
-    type: [Object],
-    required: true
-  },
+  seasons: [
+    {
+      type: Object,
+      required: true,
+    },
+  ],
   numberOfSeasons: {
     type: Number,
-    required: true
+    required: true,
   },
   numberOfEpisodes: {
     type: Number,
-    required: true
-  }
-
+    required: true,
+  },
 })
 
 const Tv = mongoose.model("Tv", tvSchema)
