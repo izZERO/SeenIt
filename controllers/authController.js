@@ -29,7 +29,6 @@ const registerUser = async (req, res) => {
     console.error('An error has occurred registering a user!', error.message)
   }
 }
-
 const signInUser = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email })
