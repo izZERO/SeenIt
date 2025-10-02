@@ -22,6 +22,10 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
+app.use((req, res, next) => {
+  res.locals.user = req.session.user
+  next()
+})
 
 // Auth Route
 app.use('/auth', authRouter)
@@ -30,7 +34,7 @@ app.use('/auth', authRouter)
 
 // Main Route
 app.get('/', (req, res) => {
-  res.send('Your app is connected . . . ')
+  res.render('index.ejs')
 })
 
 
