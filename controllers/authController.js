@@ -50,7 +50,17 @@ const signInUser = async (req, res) => {
   }
 }
 
+const signOutUser = (req, res) => {
+  try {
+    req.session.destroy()
+    res.redirect('/')
+  } catch (error) {
+    console.error('An error has occurred signing out a user!', error.message)
+  }
+}
+
 module.exports = {
   registerUser,
-  signInUser
+  signInUser,
+  signOutUser
 }
