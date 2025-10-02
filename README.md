@@ -9,8 +9,9 @@
 ### | [mohammed](https://github.com/donly8282-sys)
 ### | [naser](https://github.com/envwx)
 ***
-
-
+### | [ERD] ---
+### | [Trello Board] ---
+***
 ### ***Description***
 
 #### Seenit, a project that is about viewing movies and shows, as well as having lists to showcase them and to see the details of each movie or a show
@@ -36,6 +37,9 @@
 * profile photo option
 * cover photo option
 *
+***
+# Unresolved problems
+* not yet detected
 ***
 ## ***The Home Page***
 
