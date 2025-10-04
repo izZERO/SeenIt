@@ -1,6 +1,10 @@
 const mongoose = require("mongoose")
 
 const tvSchema = new mongoose.Schema({
+  id: {
+    type: Number,
+    required: true,
+  },
   title: {
     type: String,
     required: true,
@@ -13,14 +17,14 @@ const tvSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  genre: [
+  genres: [
     {
       type: Object,
       required: true,
     },
   ],
   duration: {
-    type: Number,
+    type: Array,
     required: true,
   },
   poster: {
