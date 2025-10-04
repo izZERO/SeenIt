@@ -3,7 +3,7 @@ const Tv = require("../models/Tv")
 exports.tv_index_get = async (req, res) => {
   try {
     const url =
-      "https://api.themoviedb.org/3/trending/tv/day?language=en-UShttps://api.themoviedb.org/3/trending/movie/day?language=en-US"
+      "https://api.themoviedb.org/3/trending/tv/day?language=en-US"
     const options = {
       method: "GET",
       headers: {
