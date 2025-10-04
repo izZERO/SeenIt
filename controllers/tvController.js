@@ -2,8 +2,10 @@ const Tv = require("../models/Tv")
 
 exports.tv_index_get = async (req, res) => {
   try {
-    const url =
-      "https://api.themoviedb.org/3/trending/tv/day?language=en-UShttps://api.themoviedb.org/3/trending/movie/day?language=en-US"
+    const trendingUrl =
+      "https://api.themoviedb.org/3/trending/tv/day?language=en-US"
+    const popularUrl =
+      "https://api.themoviedb.org/3/tv/popular?language=en-US"
     const options = {
       method: "GET",
       headers: {
@@ -12,9 +14,10 @@ exports.tv_index_get = async (req, res) => {
       },
     }
 
-    const response = await fetch(url, options)
-    const data = await response.json()
-    const tvShows = data.results.map((show) => {
+    // Trending TvShows
+    const trendingResponse = await fetch(trendingUrl, options)
+    const trendingData = await trendingResponse.json()
+    const trendingTvShows = trendingData.results.map((show) => {
       return {
         id: show.id,
         title: show.name,
@@ -25,13 +28,28 @@ exports.tv_index_get = async (req, res) => {
         language: show.original_language,
       }
     })
-    res.send(tvShows)
+
+    // popular TvShows
+    const popularResponse = await fetch(popularUrl, options)
+    const popularData = await popularResponse.json()
+    const popularTvShows = popularData.results.map((show) => {
+      return {
+        id: show.id,
+        title: show.name,
+        overview: show.overview,
+        releaseDate: show.first_air_date,
+        genres: show.genre_ids,
+        poster: show.poster_path,
+        language: show.original_language,
+      }
+    })
+    res.send({trendingTvShows, popularTvShows})
   } catch (error) {
     console.error("An error has occurred while getting tvShows!", error.message)
   }
 }
 
-exports.tv_show_get = async (req,res) => {
+exports.tv_show_get = async (req, res) => {
   try {
     const tvId = req.params.tvId
     const tvInDatabase = await Tv.exists({ id: tvId })
