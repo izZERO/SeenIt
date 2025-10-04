@@ -2,7 +2,10 @@ const Movie = require("../models/Movie")
 
 exports.movie_index_get = async (req, res) => {
   try {
-    const url = "https://api.themoviedb.org/3/trending/movie/day?language=en-US"
+    const trendingUrl =
+      "https://api.themoviedb.org/3/trending/movie/day?language=en-US"
+    const popularUrl =
+      "https://api.themoviedb.org/3/movie/popular?language=en-US"
     const options = {
       method: "GET",
       headers: {
@@ -11,9 +14,10 @@ exports.movie_index_get = async (req, res) => {
       },
     }
 
-    const response = await fetch(url, options)
-    const data = await response.json()
-    const movies = data.results.map((movie) => {
+    // Trending Movies
+    const trendingResponse = await fetch(trendingUrl, options)
+    const trendingData = await trendingResponse.json()
+    const trendingMovies = trendingData.results.map((movie) => {
       return {
         id: movie.id,
         title: movie.title,
@@ -24,12 +28,24 @@ exports.movie_index_get = async (req, res) => {
         language: movie.original_language,
       }
     })
-    res.send(movies)
+
+    // Popular Movies
+    const popularResponse = await fetch(popularUrl, options)
+    const popularData = await popularResponse.json()
+    const popularMovies = popularData.results.map((movie) => {
+      return {
+        id: movie.id,
+        title: movie.title,
+        overview: movie.overview,
+        releaseDate: movie.release_date,
+        genres: movie.genre_ids,
+        poster: movie.poster_path,
+        language: movie.original_language,
+      }
+    })
+    res.send({ trendingMovies, popularMovies })
   } catch (error) {
-    console.error(
-      "An error has occurred while getting movies!",
-      error.message
-    )
+    console.error("An error has occurred while getting movies!", error.message)
   }
 }
 
