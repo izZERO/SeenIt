@@ -35,6 +35,9 @@ app.use('/auth', authRouter)
 const movieRouter = require("./routes/movieRouter")
 app.use("/movies", movieRouter)
 
+const tvRouter = require("./routes/tvRouter")
+app.use("/tvshows", tvRouter)
+
 // Main Route
 app.get('/', (req, res) => {
   res.render('index.ejs')
