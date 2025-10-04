@@ -1,31 +1,36 @@
 const Movie = require("../models/Movie")
 
 exports.movie_index_get = async (req, res) => {
-  const url = "https://api.themoviedb.org/3/trending/movie/day?language=en-US"
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${process.env.API_KEY}`,
-    },
-  }
-
-  const response = await fetch(url, options)
-  const data = await response.json()
-  const movies = data.results.map((movie) => {
-    return {
-      id: movie.id,
-      title: movie.title,
-      overview: movie.overview,
-      releaseDate: movie.release_date,
-      genres: movie.genre_ids,
-      duration: movie.runtime,
-      poster: movie.poster_path,
-      language: movie.original_language,
-      status: movie.status,
+  try {
+    const url = "https://api.themoviedb.org/3/trending/movie/day?language=en-US"
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${process.env.API_KEY}`,
+      },
     }
-  })
-  res.send(movies)
+
+    const response = await fetch(url, options)
+    const data = await response.json()
+    const movies = data.results.map((movie) => {
+      return {
+        id: movie.id,
+        title: movie.title,
+        overview: movie.overview,
+        releaseDate: movie.release_date,
+        genres: movie.genre_ids,
+        poster: movie.poster_path,
+        language: movie.original_language,
+      }
+    })
+    res.send(movies)
+  } catch (error) {
+    console.error(
+      "An error has occurred while getting movies!",
+      error.message
+    )
+  }
 }
 
 exports.movie_show_get = async (req, res) => {
