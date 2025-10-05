@@ -11,6 +11,7 @@ const PORT = process.env.PORT ? process.env.PORT : 3000
 
 //use Middleware
 const app = express()
+app.use(express.static('public'))
 
 app.use(morgan('dev'))
 app.use(express.json())
@@ -47,7 +48,7 @@ app.get('/', (req, res) => {
 // const { explore_index_get } = require("./controllers/exploreController.js")
 // app.get('/explore', explore_index_get)
 const exploreRouter = require("./routes/exploreRouter")
-app.use("/tv", exploreRouter)
+app.use("/", exploreRouter)
 
 app.listen(PORT, () => {
   console.log(`Running Server on Port ${PORT} . . . `)

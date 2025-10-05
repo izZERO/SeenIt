@@ -1,4 +1,28 @@
 <%- include('../partials/header.ejs') %>
+<div id="explore-main">
+  <div id="explore-trending-tv-container">
+    <% trendingTvShows.forEach((show) => { %>
+    <!-- id: 286801,
+        title: "Monster: The Ed Gein Story",
+        overview:
+          "The shocking true-life tale of Ed Gein, the infamous murderer and grave robber who inspired many of Hollywood's most iconic on-screen killers.",
+        releaseDate: "2025-10-03",
+        genres: [18, 80],
+        poster: "/iDHzRALtZCzHVmx7uyjTTKvMAPB.jpg",
+        language: "en", -->
+    <div class="explore-trending-tv-cards">
+      <p>ID: <%= show.id %></p>
+      <img
+        class="explore-posters"
+        src="https://image.tmdb.org/t/p/w500<%= show.poster%>"
+      />
+      <p><%= show.title %></p>
+      <p>Release Date: <%= show.releaseDate %></p>
+      <p>Genres: <%= show.genreNames.join(', ') %></p>
+    </div>
 
+    <% }) %>
+  </div>
+</div>
 
 <%- include('../partials/footer.ejs') %>
