@@ -1,9 +1,8 @@
 const bcrypt = require('bcrypt')
 const User = require('../models/User.js')
 
-
-exports.auth_signup_get = async (req,res) => {
-  res.render("auth/sign-up.ejs")
+exports.auth_signup_get = async (req, res) => {
+  res.render('auth/sign-up.ejs')
 }
 
 exports.auth_signup_post = async (req, res) => {
@@ -35,8 +34,8 @@ exports.auth_signup_post = async (req, res) => {
   }
 }
 
-exports.auth_signin_get = async (req,res) => {
-  res.render("auth/sign-in.ejs")
+exports.auth_signin_get = async (req, res) => {
+  res.render('auth/sign-in.ejs')
 }
 
 exports.auth_signin_post = async (req, res) => {
@@ -61,9 +60,41 @@ exports.auth_signin_post = async (req, res) => {
 
 exports.auth_signout_get = async (req, res) => {
   try {
-req.session.destroy()
-res.redirect('/')
+    req.session.destroy()
+    res.redirect('/')
   } catch (error) {
-console.error('an error has occurred signing out  user!', error.message)
+    console.error('an error has occurred signing out  user!', error.message)
+  }
+}
+
+exports.auth_updatePassword_get = async (req, res) => {
+  res.render('auth/updatePassword')
+}
+
+exports.auth_updatePassword_put = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id)
+    if (!user) {
+      return res.send('No user with that ID')
+    }
+    const validPassword = bcrypt.compareSync(
+      req.body.oldPassword,
+      user.password
+    )
+    if (!validPassword) {
+      return res.send('Your old password was not correct')
+    }
+    if (req.body.newPassword !== req.body.confirmPassword) {
+      return res.send('Password and confirm password must match')
+    }
+    const hashedPassword = bcrypt.hashSync(req.body.newPassword, 10)
+    user.password = hashedPassword
+    await user.save()
+    res.send(`Your password has been updated, ${user.username}!`)
+  } catch (error) {
+    console.error(
+      'An error has occurred updating a user password',
+      error.message
+    )
   }
 }

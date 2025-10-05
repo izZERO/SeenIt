@@ -1,0 +1,17 @@
+<%- include('../partials/header.ejs') %>
+
+<h2><%= user.first %> <%= user.last %>'s Profile</h2>
+<img src="<%= user.picture %>" alt="Profile Picture" width="150" />
+
+<div>
+  <a href=<%= `/auth/${user._id}/update-password` %>>Update Password</a>
+</div>
+
+<h3>Recipes:</h3>
+<ul>
+  <% user.recipes.forEach(recipe => { %>
+    <li><a href="/recipes/<%= recipe._id %>"><%= recipe.title %></a></li>
+  <% }) %>
+</ul>
+
+<%- include('../partials/footer.ejs') %>
