@@ -59,3 +59,11 @@ exports.auth_signin_post = async (req, res) => {
   }
 }
 
+exports.auth_signout_get = async (req, res) => {
+  try {
+req.session.destroy()
+res.redirect('/')
+  } catch (error) {
+console.error('an error has occurred signing out  user!', error.message)
+  }
+}
