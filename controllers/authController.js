@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt')
 const User = require('../models/User.js')
+const List = require("../models/List")
 
 
 exports.auth_signup_get = async (req,res) => {
@@ -20,6 +21,8 @@ exports.auth_signup_post = async (req, res) => {
 
     const hashedPassword = bcrypt.hashSync(req.body.password, 10)
 
+
+
     await User.create({
       email: req.body.email,
       username: req.body.username,
@@ -27,8 +30,33 @@ exports.auth_signup_post = async (req, res) => {
       profilePicture: '../images/Profile/pfp.svg',
       coverPicture: '../images/Profile/cover.jpg',
       following: [],
-      followers: []
+      followers: [],
     })
+
+    const user = await User.findOne({email: req.body.email})
+    const userId = user._id
+    // create watchList
+    await List.create({
+      user: userId,
+      title: "WatchList",
+      movie: [],
+      tv: [],
+      isWatchList: true
+    })
+      // create favList
+      await List.create({
+      user: userId,
+      title: "FavList",
+      movie: [],
+      tv: [],
+      isFavList: true
+    })
+
+    await User.findByIdAndUpdate(userId,{
+      watchList:  await List.findOne({user: userId, isWatchList: true}),
+      favList:  await List.findOne({user: userId, isFavList: true})
+    })
+
     res.send('Thanks for signing up!')
   } catch (error) {
     console.error('An error has occurred registering a user!', error.message)
@@ -53,7 +81,7 @@ exports.auth_signin_post = async (req, res) => {
       email: user.email,
       _id: user._id
     }
-    res.redirect(`/users/${user._id}`)
+    res.redirect(`/watchlist`)
   } catch (error) {
     console.error('An error has occurred signing in a user!', error.message)
   }

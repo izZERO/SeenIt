@@ -1,25 +1,33 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 
 const listSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
+    ref: "User",
+    required: true,
   },
   title: {
     type: String,
-    required: true
+    required: true,
   },
-  movie: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Movie"
-  }],
-  tv: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Tv"
-  }]
-
-
+  movie: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Movie",
+    },
+  ],
+  tv: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Tv",
+    },
+  ],
+  isWatchList: {
+    type: Boolean,
+  },
+  isFavList: {
+    type: Boolean,
+  },
 })
 
 const List = mongoose.model("List", listSchema)
