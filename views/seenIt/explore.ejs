@@ -10,7 +10,7 @@
         genres: [18, 80],
         poster: "/iDHzRALtZCzHVmx7uyjTTKvMAPB.jpg",
         language: "en", -->
-    <div class="explore-trending-tv-cards">
+    <!-- <div class="explore-trending-tv-cards">
       <p>ID: <%= show.id %></p>
       <img
         class="explore-posters"
@@ -19,6 +19,20 @@
       <p><%= show.title %></p>
       <p>Release Date: <%= show.releaseDate %></p>
       <p>Genres: <%= show.genreNames.join(', ') %></p>
+    </div> -->
+
+    <div class="card" style="width: 8rem; height: 15rem;">
+      <img
+        src="https://image.tmdb.org/t/p/w500<%= show.poster%>"
+        class="card-img-top"
+        alt="poster"
+      />
+      <div class="card-body">
+        <h6 class="card-title"><%= show.title %></h6>
+        <p class="card-subtitle mb-2 text-body-secondary"><%= show.genreNames.join(', ') %></p>
+        <p class="card-text">Release Date: <%= show.releaseDate %></p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
     </div>
 
     <% }) %>
