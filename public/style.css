@@ -1,0 +1,19 @@
+/* Explore Page */
+#explore-main {
+  display: flex;
+}
+
+#explore-trending-tv-container {
+  display: flex;
+  gap: 4px;
+}
+
+.explore-trending-tv-cards {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid black;
+}
+
+.explore-posters {
+  width: 100px;
+}
