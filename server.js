@@ -34,17 +34,20 @@ app.use('/auth', authRouter)
 // Movie Route
 const movieRouter = require("./routes/movieRouter")
 app.use("/movies", movieRouter)
-
+// Tv Route
 const tvRouter = require("./routes/tvRouter")
-app.use("/tvshows", tvRouter)
+app.use("/tv", tvRouter)
 
 // Main Route
 app.get('/', (req, res) => {
   res.render('index.ejs')
 })
 
-
-
+// Explore Route
+// const { explore_index_get } = require("./controllers/exploreController.js")
+// app.get('/explore', explore_index_get)
+const exploreRouter = require("./routes/exploreRouter")
+app.use("/tv", exploreRouter)
 
 app.listen(PORT, () => {
   console.log(`Running Server on Port ${PORT} . . . `)
