@@ -1,0 +1,22 @@
+<%- include('../partials/header.ejs') %>
+<img src="<%= user.coverPicture %> " />
+<h1><%= user.username %></h1>
+
+<img src="<%= user.profilePicture %>" alt="pfp" />
+
+<h2>Followers</h2>
+<ul>
+  <% user.followers.forEach(f => { %>
+  <li><% f %></li>
+
+  <% }) %>
+</ul>
+
+<h2>Following</h2>
+<ul>
+  <%user.following.forEach(f => { %>
+  <li><% f %></li>
+  <% }) %>
+</ul>
+
+<%-include('../partials/footer.ejs') %>
