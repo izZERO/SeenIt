@@ -81,7 +81,7 @@ exports.auth_signin_post = async (req, res) => {
       email: user.email,
       _id: user._id
     }
-    res.redirect(`/watchlist`)
+    res.redirect(`/explore`)
   } catch (error) {
     console.error('An error has occurred signing in a user!', error.message)
   }
@@ -90,7 +90,7 @@ exports.auth_signin_post = async (req, res) => {
 exports.auth_signout_get = async (req, res) => {
   try {
 req.session.destroy()
-res.redirect('/')
+res.redirect('/explore')
   } catch (error) {
 console.error('an error has occurred signing out  user!', error.message)
   }
