@@ -1,9 +1,8 @@
 const bcrypt = require('bcrypt')
 const User = require('../models/User.js')
 
-
-exports.auth_signup_get = async (req,res) => {
-  res.render("auth/sign-up.ejs")
+exports.auth_signup_get = async (req, res) => {
+  res.render('auth/sign-up.ejs')
 }
 
 exports.auth_signup_post = async (req, res) => {
@@ -35,25 +34,28 @@ exports.auth_signup_post = async (req, res) => {
   }
 }
 
-exports.auth_signin_get = async (req,res) => {
-  res.render("auth/sign-in.ejs")
+exports.auth_signin_get = async (req, res) => {
+  res.render('auth/sign-in.ejs')
 }
 
 exports.auth_signin_post = async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.email })
-    if (!user) {
+    const userInDatabase = await User.findOne({ email: req.body.email })
+    if (!userInDatabase) {
       return res.send('no user has been found')
     }
-    const validPassword = bcrypt.compareSync(req.body.password, user.password)
+    const validPassword = bcrypt.compareSync(
+      req.body.password,
+      userInDatabase.password
+    )
     if (!validPassword) {
       return res.send('wrong password! please try again.')
     }
     req.session.user = {
-      email: user.email,
-      _id: user._id
+      username: userInDatabase.username,
+      _id: userInDatabase._id
     }
-    res.redirect(`/users/${user._id}`)
+    res.redirect('/')
   } catch (error) {
     console.error('An error has occurred signing in a user!', error.message)
   }
@@ -61,9 +63,17 @@ exports.auth_signin_post = async (req, res) => {
 
 exports.auth_signout_get = async (req, res) => {
   try {
-req.session.destroy()
-res.redirect('/')
+    req.session.destroy()
+    res.redirect('/')
   } catch (error) {
-console.error('an error has occurred signing out  user!', error.message)
+    console.error('an error has occurred signing out  user!', error.message)
   }
 }
+// exports.auth_updatePassword_put = async => {
+//   try {
+// const user = await User.findById(r)
+//   } catch (error) {
+
+//   }
+// }
+
