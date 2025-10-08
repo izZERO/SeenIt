@@ -1,33 +1,27 @@
-<%- include('../../partials/header.ejs') %>
-
-<a href="/profile/edit">Edit</a>
-
-<% if (user.coverPicture) { %>
-  <img src="/uploads/<%= user.coverPicture %>" alt="Cover Picture" />
+<%- include('../../partials/header.ejs') %> <% if (user.coverPicture) { %>
+<img class="cover-image" src="/uploads/<%= user.coverPicture %>" alt="Cover Picture" />
 <% } else { %>
-  <img src="/images/cover.jpg" alt="Default Cover" />
-<% } %>
-
-<h1><%= user.username %></h1>
-
-<% if (user.profilePicture) { %>
-  <img src="/uploads/<%= user.profilePicture %>" alt="Profile Picture" />
+<img src="/images/cover.jpg" alt="Default Cover" />
+<% } %> <% if (user.profilePicture) { %>
+<img
+  class="profile-image"
+  src="/uploads/<%= user.profilePicture %>"
+  alt="Profile Picture"
+/>
 <% } else { %>
-  <img src="/images/pfp.svg" alt="Default Profile" />
+<img src="/images/pfp.svg" alt="Default Profile" />
 <% } %>
+<div class="user-nme">
+  <h1><%= user.username %></h1>
 
-<h2>Followers</h2>
-<ul>
-  <% user.followers.forEach(f => { %>
-    <li><%= f %></li>
-  <% }) %>
-</ul>
-
+</div>
+<a class="edit-btn card-hover" href="/profile/edit">Edit</a>
+<div class="flw-style">
 <h2>Following</h2>
 <ul>
   <% user.following.forEach(f => { %>
-    <li><%= f %></li>
+  <li><%= f %></li>
   <% }) %>
 </ul>
-
+</div>
 <%- include('../../partials/footer.ejs') %>

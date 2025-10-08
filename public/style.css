@@ -1,5 +1,9 @@
 * {
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #181818 !important;
 }
 
 body {
@@ -67,4 +71,80 @@ nav {
 * {
   scrollbar-width: thin;
   scrollbar-color: #6c757d #1e1e1e;
+}
+
+form {
+  padding: 90px;
+  margin: -90px auto;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+  max-width: 500px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: justify;
+}
+
+main,
+h2 {
+  color: white;
+  text-align: center;
+  margin-top: 9px;
+}
+
+.auth-input {
+  border-radius: 8px;
+  margin: 3px 0;
+}
+.btn-style {
+  font-weight: 600;
+  border-radius: 9px;
+  margin-top: 8px;
+background-color: #e45260;
+}
+
+.profile-image {
+  position: absolute;
+  border-radius: 250px;
+  top: 350px;
+  left: 50px;
+  height: 150px;
+  width: 150px;
+  z-index: 2;
+  display: flex;
+}
+
+.cover-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 85%;
+  width: 100%;
+  z-index: -1;
+}
+
+.user-nme {
+  position: absolute;
+  top: 490px;
+  left: 70px;
+  display: flex;
+
+}
+
+.edit-btn {
+  position: absolute;
+  top: 570px;
+  left: 70px;
+  color: white;
+  background-color: #e45260;
+  width: 70px;
+  border-radius: 30px;
+}
+
+
+.flw-style {
+  position: absolute;
+  top: 530px;
+  left: 70px;
+  display: flex;
 }
