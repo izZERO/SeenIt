@@ -45,11 +45,15 @@ exports.watchList_add_put = async (req, res) => {
 
 exports.watchList_deleteItem_delete = async (req, res) => {
   try {
+    const { movieId, tvId } = req.body
+    const pullQuery = movieId ? { movie: movieId } : { tv: tvId }
+
     await List.findOneAndUpdate(
       { user: req.session.user._id, isWatchList: true },
-      { $pull: { movie: req.body.movieId } }
+      { $pull: pullQuery }
     )
-    res.send("Movie removed from watchlist")
+
+    res.redirect("/watchlist")
   } catch (error) {
     console.error(
       "An error has occurred while deleting from the watch list!",
@@ -90,11 +94,15 @@ exports.favList_add_put = async (req, res) => {
 
 exports.favList_deleteItem_delete = async (req, res) => {
   try {
+    const { movieId, tvId } = req.body
+    const pullQuery = movieId ? { movie: movieId } : { tv: tvId }
+
     await List.findOneAndUpdate(
       { user: req.session.user._id, isFavList: true },
-      { $pull: { movie: req.body.movieId } }
+      { $pull: pullQuery }
     )
-    res.send("Movie removed from favourite list")
+
+    res.send("Item removed from favourite list")
   } catch (error) {
     console.error(
       "An error has occurred while deleting from the favourite list!",
