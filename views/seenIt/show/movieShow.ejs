@@ -86,6 +86,7 @@
         </div>
         <br />
         <div class="container-fluid d-flex justify-content-between">
+          <% if (user) { %>
           <div class="container-fluid">
             <button
               class="btn btn-outline-dark me-4 card-hover"
@@ -98,6 +99,7 @@
               <i class="bi bi-bookmark-heart me-2"></i>Add to Favorites
             </button>
           </div>
+          <% } %>
 
           <a
             href="/explore"
