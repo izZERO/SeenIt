@@ -125,7 +125,21 @@ exports.explore_search_get = async (req, res) => {
   }
 }
 
-exports.explore_search_get = async (req, res) => {
+exports.explore_search_post = async (req, res) => {
+  try {
+    const query = req.body.query
+    if (query) {
+      res.redirect(`/explore/search/${query}`)
+    } else {
+      res.redirect("/explore/search")
+    }
+  } catch (error) {
+    console.error("An error has occurred while handling search!", error.message)
+    res.redirect("/explore/search")
+  }
+}
+
+exports.explore_searchResults_get = async (req, res) => {
   try {
     const movieUrl = `https://api.themoviedb.org/3/search/movie?query=${req.params.query}`
     const tvUrl = `https://api.themoviedb.org/3/search/tv?query=${req.params.query}`
@@ -145,9 +159,16 @@ exports.explore_search_get = async (req, res) => {
     const tvData = await tvResponse.json()
 
     // User Search
-    const users = await User.find({ username: { "$regex": req.params.query, "$options": "i" } })
+    const users = await User.find({
+      username: { $regex: req.params.query, $options: "i" },
+    })
 
-    res.send({ movieData, tvData, users })
+    res.render("seenIt/explore/search.ejs", {
+      query: req.params.query,
+      movies: movieData.results || [],
+      tvShows: tvData.results || [],
+      users: users || [],
+    })
   } catch (error) {
     console.error(
       "An error has occurred while getting your search!",

@@ -112,7 +112,7 @@ exports.favList_deleteItem_delete = async (req, res) => {
       { $pull: pullQuery }
     )
 
-    res.redirect("back")
+    res.redirect("/watchlist")
   } catch (error) {
     console.error(
       "An error has occurred while deleting from the favourite list!",

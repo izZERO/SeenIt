@@ -1,5 +1,164 @@
-<%- include('../partials/header.ejs') %>
+<%- include('../../partials/header.ejs') %>
 
-<h1>search page</h1>
+<div class="px-4 py-3">
+  <!-- Search Bar -->
+  <div class="mb-4">
+    <form action="/explore/search" method="POST" class="d-flex">
+      <div class="input-group">
+        <span class="input-group-text bg-dark border-secondary">
+          <i class="bi bi-search text-light"></i>
+        </span>
+        <input
+          type="text"
+          name="query"
+          class="form-control bg-dark text-light border-secondary"
+          placeholder="Search for movies, TV shows, or users..."
+          required
+        />
+        <button
+          class="btn btn-outline-light"
+          type="submit"
+          style="background-color: #e45260; border-color: #e45260"
+        >
+          Search
+        </button>
+      </div>
+    </form>
+  </div>
 
-<%- include('../partials/footer.ejs') %>
+  <h2 class="text-light mb-4">Search Results for "<%= query %>"</h2>
+
+  <!-- Movies Section -->
+  <% if (movies && movies.length > 0) { %>
+  <h3 class="text-light fw-bold mb-2 d-flex align-items-center gap-2">
+    <img
+      src="/images/Icons/movieIcon.svg"
+      alt="movies"
+      width="40"
+      height="40"
+    />
+    Movies (<%= movies.length %>)
+  </h3>
+
+  <div class="d-flex overflow-auto pb-2 pt-2 gap-2 mb-5">
+    <% movies.forEach((movie) => { %>
+    <div class="flex-shrink-0" style="width: 200px">
+      <a href="/movies/<%= movie.id %>" class="text-decoration-none">
+        <div class="card h-100 shadow-sm card-hover bg-secondary border-0">
+          <img
+            src="<%= movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : '/images/no-image.png' %>"
+            class="card-img-top img-fluid"
+            style="height: 250px; object-fit: cover"
+            alt="<%= movie.title %> poster"
+          />
+          <div class="card-body p-2 bg-dark">
+            <h6
+              class="card-title mb-1 fw-semibold text-truncate text-light"
+              style="font-size: 0.9rem"
+            >
+              <%= movie.title %>
+            </h6>
+            <p class="card-text text-light mb-0 small">
+              <%= movie.release_date || 'N/A' %>
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <% }) %>
+  </div>
+  <% } else { %>
+  <div class="mb-4">
+    <h5 class="text-light opacity-75">No movies found</h5>
+  </div>
+  <% } %>
+
+  <!-- TV Shows Section -->
+  <% if (tvShows && tvShows.length > 0) { %>
+  <h3 class="text-light fw-bold mb-2 d-flex align-items-center gap-2">
+    <img
+      src="/images/Icons/tvShowIcon.svg"
+      alt="tv shows"
+      width="40"
+      height="40"
+    />
+    TV Shows (<%= tvShows.length %>)
+  </h3>
+
+  <div class="d-flex overflow-auto pb-2 pt-2 gap-2 mb-5">
+    <% tvShows.forEach((show) => { %>
+    <div class="flex-shrink-0" style="width: 200px">
+      <a href="/tv/<%= show.id %>" class="text-decoration-none">
+        <div class="card h-100 shadow-sm card-hover bg-secondary border-0">
+          <img
+            src="<%= show.poster_path ? 'https://image.tmdb.org/t/p/w500' + show.poster_path : '/images/no-image.png' %>"
+            class="card-img-top img-fluid"
+            style="height: 250px; object-fit: cover"
+            alt="<%= show.name %> poster"
+          />
+          <div class="card-body p-2 bg-dark">
+            <h6
+              class="card-title mb-1 fw-semibold text-truncate text-light"
+              style="font-size: 0.9rem"
+            >
+              <%= show.name %>
+            </h6>
+            <p class="card-text text-light mb-0 small">
+              <%= show.first_air_date || 'N/A' %>
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <% }) %>
+  </div>
+  <% } else { %>
+  <div class="mb-4">
+    <h5 class="text-light opacity-75">No TV shows found</h5>
+  </div>
+  <% } %>
+
+  <!-- Users Section -->
+  <% if (users && users.length > 0) { %>
+  <h3 class="text-light fw-bold mb-2 d-flex align-items-center gap-2">
+    <i class="bi bi-people-fill" style="color: #e45260; font-size: 2rem"></i>
+    Users (<%= users.length %>)
+  </h3>
+
+  <div class="d-flex overflow-auto pb-2 pt-2 gap-2 mb-5">
+    <% users.forEach((user) => { %>
+    <div class="flex-shrink-0" style="width: 200px">
+      <a href="/user/<%= user._id %>" class="text-decoration-none">
+        <div class="card h-100 shadow-sm card-hover bg-secondary border-0">
+          <div
+            class="d-flex align-items-center justify-content-center bg-secondary"
+            style="height: 250px"
+          >
+            <img
+              src="<%= user.profilePicture %>"
+              class="rounded-circle"
+              style="width: 80px; height: 80px; object-fit: cover"
+              alt="<%= user.username %> profile picture"
+            />
+          </div>
+          <div class="card-body p-2 bg-dark">
+            <h6
+              class="card-title mb-1 fw-semibold text-truncate text-light"
+              style="font-size: 0.9rem"
+            >
+              <%= user.username %>
+            </h6>
+          </div>
+        </div>
+      </a>
+    </div>
+    <% }) %>
+  </div>
+  <% } else { %>
+  <div class="mb-4">
+    <h5 class="text-light opacity-75">No users found</h5>
+  </div>
+  <% } %>
+</div>
+
+<%- include('../../partials/footer.ejs') %>

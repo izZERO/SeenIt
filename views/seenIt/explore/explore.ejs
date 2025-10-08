@@ -1,6 +1,31 @@
 <%- include('../../partials/header.ejs') %>
 
 <div class="px-4 py-3">
+  <!-- Search Bar -->
+  <div class="mb-4">
+    <form action="/explore/search" method="POST" class="d-flex">
+      <div class="input-group">
+        <span class="input-group-text bg-dark border-secondary">
+          <i class="bi bi-search text-light"></i>
+        </span>
+        <input
+          type="text"
+          name="query"
+          class="form-control bg-dark text-light border-secondary"
+          placeholder="Search for movies, TV shows, or users..."
+          required
+        />
+        <button
+          class="btn btn-outline-light"
+          type="submit"
+          style="background-color: #e45260; border-color: #e45260"
+        >
+          Search
+        </button>
+      </div>
+    </form>
+  </div>
+
   <h3 class="text-light fw-bold mb-2 d-flex align-items-center gap-2">
     <img
       src="/images/Icons/trendingIcon.svg"
@@ -45,7 +70,9 @@
               </span>
               <% }) %>
             </div>
-            <p class="card-text text-light mb-0 small"><%= show.releaseDate %></p>
+            <p class="card-text text-light mb-0 small">
+              <%= show.releaseDate %>
+            </p>
           </div>
         </div>
       </a>
@@ -97,7 +124,9 @@
               </span>
               <% }) %>
             </div>
-            <p class="card-text text-light mb-0 small"><%= show.releaseDate %></p>
+            <p class="card-text text-light mb-0 small">
+              <%= show.releaseDate %>
+            </p>
           </div>
         </div>
       </a>
