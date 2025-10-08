@@ -2,10 +2,13 @@
   font-family: "Poppins", sans-serif;
 }
 
-main, nav {
+body {
+  background-color: #181818 !important;
+}
+main,
+nav {
   background-color: #181818;
 }
-
 
 /* Explore Page
 #explore-main {

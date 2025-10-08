@@ -57,7 +57,7 @@ exports.movie_show_get = async (req, res) => {
     // Check if movie exists in DB
     if (movieInDatabase) {
       const movie = await Movie.findOne({ id: movieId })
-      return res.send(movie)
+      return res.render("seenIt/show/movieShow.ejs", {movie})
     }
 
     const url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`
@@ -85,7 +85,8 @@ exports.movie_show_get = async (req, res) => {
 
     // Add movie to DB
     Movie.create(movie)
-    res.send(movie)
+
+    return res.render("seenIt/show/movieShow.ejs", {movie})
   } catch (error) {
     console.error(
       "An error has occurred while getting movie details!",
