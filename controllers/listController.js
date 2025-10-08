@@ -6,7 +6,20 @@ exports.watchList_index_get = async (req, res) => {
       user: req.session.user._id,
       isWatchList: true,
     })
-    res.send(watchList)
+      .populate("movie")
+      .populate("tv")
+
+    const movies = watchList?.movie || []
+    const tvShows = watchList?.tv || []
+
+    movies.forEach((movie) => {
+      movie.type = "movie"
+    })
+    tvShows.forEach((show) => {
+      show.type = "show"
+    })
+
+    res.render("seenIt/watchlist.ejs", { movies, tvShows })
   } catch (error) {
     console.error(
       "An error has occurred while getting the watch list!",

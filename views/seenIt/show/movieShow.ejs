@@ -1,0 +1,115 @@
+<%- include('../../partials/header.ejs') %>
+
+<div class="container-fluid px-4 py-3">
+  <div class="d-flex" style="gap: 30px">
+    <div style="flex: 0 0 300px">
+      <img
+        src="https://image.tmdb.org/t/p/w500<%= movie.poster%>"
+        class="img-fluid"
+        style="height: 500px; width: 300px; object-fit: cover"
+        alt="<%= movie.title %> poster"
+      />
+    </div>
+
+    <!-- Movie Information -->
+    <div style="flex: 1">
+      <div class="mb-4">
+        <h1 class="text-light fw-bold mb-2"><%= movie.title %></h1>
+
+        <!-- Genres -->
+        <div class="mb-3">
+          <% if (movie.genres && movie.genres.length > 0) { %> <%
+          movie.genres.forEach((genre) => { %>
+          <span
+            class="badge text-dark me-2"
+            style="
+              font-size: 0.9rem;
+              padding: 0.5em 1em;
+              background-color: #e45260;
+            "
+          >
+            <%= genre.name %>
+          </span>
+          <% }) %> <% } %>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="row text-light mb-4">
+          <div class="col-auto">
+            <div class="d-flex align-items-center mb-2">
+              <i class="bi bi-calendar3 me-2" style="color: #e45260"></i>
+              <span class="fw-semibold me-2">Release Date:</span>
+              <span><%= movie.releaseDate %></span>
+            </div>
+          </div>
+
+          <% if (movie.duration) { %>
+          <div class="col-auto">
+            <div class="d-flex align-items-center mb-2">
+              <i class="bi bi-clock me-2" style="color: #e45260"></i>
+              <span class="fw-semibold me-2">Duration:</span>
+              <span><%= movie.duration %> minutes</span>
+            </div>
+          </div>
+          <% } %> <% if (movie.language) { %>
+          <div class="col-auto">
+            <div class="d-flex align-items-center mb-2">
+              <i class="bi bi-translate me-2" style="color: #e45260"></i>
+              <span class="fw-semibold me-2">Language:</span>
+              <span><%= movie.language.toUpperCase() %></span>
+            </div>
+          </div>
+          <% } %> <% if (movie.status) { %>
+          <div class="col-auto">
+            <div class="d-flex align-items-center mb-2">
+              <i class="bi bi-info-circle me-2" style="color: #e45260"></i>
+              <span class="fw-semibold me-2">Status:</span>
+              <span class="badge text-dark" style="background-color: #e45260"
+                ><%= movie.status %></span
+              >
+            </div>
+          </div>
+          <% } %>
+        </div>
+      </div>
+
+      <!-- Overview Section -->
+      <% if (movie.overview) { %>
+      <div class="mb-4">
+        <h3 class="text-light fw-semibold mb-3">
+          <i class="bi bi-file-text me-2"></i>Overview
+        </h3>
+        <div class="bg-dark rounded p-4">
+          <p class="text-light mb-0 lh-lg" style="font-size: 1.1rem">
+            <%= movie.overview %>
+          </p>
+        </div>
+        <br />
+        <div class="container-fluid d-flex justify-content-between">
+          <div class="container-fluid">
+            <button
+              class="btn btn-outline-dark me-4 card-hover"
+              style="background-color: #e45260"
+            >
+              <i class="bi bi-bookmark-plus me-2"></i>Add to Watchlist
+            </button>
+
+            <button class="btn btn-outline-light card-hover">
+              <i class="bi bi-bookmark-heart me-2"></i>Add to Favorites
+            </button>
+          </div>
+
+          <a
+            href="/explore"
+            class="btn btn-outline-light btn-md align-self-end card-hover"
+          >
+            <i class="bi bi-arrow-left me-2"></i>Back to Explore
+          </a>
+        </div>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<%- include('../../partials/footer.ejs') %>
