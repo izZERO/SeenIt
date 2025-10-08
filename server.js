@@ -68,6 +68,10 @@ app.use("/", listRouter)
 const exploreRouter = require("./routes/exploreRouter")
 app.use("/", exploreRouter)
 
+// User Route
+const userRouter = require("./routes/userRouter")
+app.use("/", userRouter)
+
 // Main Route
 app.get('/', (req, res) => {
   res.render('index.ejs')
