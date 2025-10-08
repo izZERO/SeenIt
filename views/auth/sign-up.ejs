@@ -1,21 +1,23 @@
 <%- include('../partials/header.ejs') %>
 
-<h2>Sign Up</h2>
-<div>
-  <form action="/auth/sign-up" method="POST">
-    <img src="/images/Icons/seenItLogo.png" alt="SeenIt" />
+<div class="auth-page">
+  <h2>Sign Up</h2>
+  <div>
+    <form action="/auth/sign-up" method="POST">
+      <img src="/images/Icons/seenItLogo.png" alt="SeenIt" />
 
-    <input class="auth-input card-hover" type="email" name="email" placeholder="Email" required />
-    <input class="auth-input card-hover" type="text" name="username" placeholder="Username" required />
-    <input class="auth-input card-hover" type="password" name="password" placeholder="Password" required />
-    <input class="auth-input card-hover"
-      type="password"
-      name="confirmPassword"
-      placeholder="Confirm Password"
-      required
-    />
-    <button class="btn-style card-hover" type="submit">Register</button>
-  </form>
+      <input class="auth-input card-hover" type="email" name="email" placeholder="Email" required />
+      <input class="auth-input card-hover" type="text" name="username" placeholder="Username" required />
+      <input class="auth-input card-hover" type="password" name="password" placeholder="Password" required />
+      <input class="auth-input card-hover"
+        type="password"
+        name="confirmPassword"
+        placeholder="Confirm Password"
+        required
+      />
+      <button class="btn-style card-hover" type="submit">Register</button>
+    </form>
+  </div>
 </div>
 
 <%- include('../partials/footer.ejs') %>

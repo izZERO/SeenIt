@@ -1,5 +1,5 @@
 * {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 body {
@@ -73,7 +73,8 @@ nav {
   scrollbar-color: #6c757d #1e1e1e;
 }
 
-form {
+/* Auth Pages Styles */
+.auth-page form {
   padding: 90px;
   margin: -90px auto;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
@@ -85,25 +86,27 @@ form {
   text-align: justify;
 }
 
-main,
-h2 {
+.auth-page main,
+.auth-page h2 {
   color: white;
   text-align: center;
   margin-top: 9px;
 }
 
-.auth-input {
+.auth-page .auth-input {
   border-radius: 8px;
   margin: 3px 0;
 }
-.btn-style {
+
+.auth-page .btn-style {
   font-weight: 600;
   border-radius: 9px;
   margin-top: 8px;
-background-color: #e45260;
+  background-color: #e45260;
 }
 
-.profile-image {
+/* Profile Page Styles */
+.profile-page .profile-image {
   position: absolute;
   border-radius: 250px;
   top: 350px;
@@ -114,7 +117,7 @@ background-color: #e45260;
   display: flex;
 }
 
-.cover-image {
+.profile-page .cover-image {
   position: absolute;
   top: 0;
   left: 0;
@@ -123,15 +126,14 @@ background-color: #e45260;
   z-index: -1;
 }
 
-.user-nme {
+.profile-page .user-nme {
   position: absolute;
   top: 490px;
   left: 70px;
   display: flex;
-
 }
 
-.edit-btn {
+.profile-page .edit-btn {
   position: absolute;
   top: 570px;
   left: 70px;
@@ -141,8 +143,7 @@ background-color: #e45260;
   border-radius: 30px;
 }
 
-
-.flw-style {
+.profile-page .flw-style {
   position: absolute;
   top: 530px;
   left: 70px;
