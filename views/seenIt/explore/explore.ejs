@@ -20,33 +20,35 @@
   <div class="d-flex overflow-auto pb-2 pt-2 gap-2 mb-5">
     <% trendingTvShows.forEach((show) => { %>
     <div class="flex-shrink-0" style="width: 200px">
-      <div class="card h-100 shadow-sm card-hover bg-secondary border-0">
-        <img
-          src="https://image.tmdb.org/t/p/w500<%= show.poster%>"
-          class="card-img-top img-fluid"
-          style="height: 250px; object-fit: cover"
-          alt="<%= show.title %> poster"
-        />
-        <div class="card-body p-2 bg-dark">
-          <h6
-            class="card-title mb-1 fw-semibold text-truncate text-light"
-            style="font-size: 0.9rem"
-          >
-            <%= show.title %>
-          </h6>
-          <div class="mb-1">
-            <% show.genreNames.slice(0,2).forEach((genre) => { %>
-            <span
-              class="badge text-dark"
-              style="font-size: 0.65rem; background-color: #e45260"
+      <a href="/tv/<%= show.id %>" class="text-decoration-none">
+        <div class="card h-100 shadow-sm card-hover bg-secondary border-0">
+          <img
+            src="https://image.tmdb.org/t/p/w500<%= show.poster%>"
+            class="card-img-top img-fluid"
+            style="height: 250px; object-fit: cover"
+            alt="<%= show.title %> poster"
+          />
+          <div class="card-body p-2 bg-dark">
+            <h6
+              class="card-title mb-1 fw-semibold text-truncate text-light"
+              style="font-size: 0.9rem"
             >
-              <%= genre %>
-            </span>
-            <% }) %>
+              <%= show.title %>
+            </h6>
+            <div class="mb-1">
+              <% show.genreNames.slice(0,2).forEach((genre) => { %>
+              <span
+                class="badge text-dark"
+                style="font-size: 0.65rem; background-color: #e45260"
+              >
+                <%= genre %>
+              </span>
+              <% }) %>
+            </div>
+            <p class="card-text text-light mb-0 small"><%= show.releaseDate %></p>
           </div>
-          <p class="card-text text-light mb-0 small"><%= show.releaseDate %></p>
         </div>
-      </div>
+      </a>
     </div>
     <% }) %>
   </div>
@@ -70,33 +72,35 @@
   <div class="d-flex overflow-auto pb-2 pt-2 gap-2 mb-5">
     <% popularTvShows.forEach((show) => { %>
     <div class="flex-shrink-0" style="width: 200px">
-      <div class="card h-100 shadow-sm card-hover bg-secondary border-0">
-        <img
-          src="https://image.tmdb.org/t/p/w500<%= show.poster%>"
-          class="card-img-top img-fluid"
-          style="height: 250px; object-fit: cover"
-          alt="<%= show.title %> poster"
-        />
-        <div class="card-body p-2 bg-dark">
-          <h6
-            class="card-title mb-1 fw-semibold text-truncate text-light"
-            style="font-size: 0.9rem"
-          >
-            <%= show.title %>
-          </h6>
-          <div class="mb-1">
-            <% show.genreNames.slice(0,2).forEach((genre) => { %>
-            <span
-              class="badge text-dark"
-              style="font-size: 0.65rem; background-color: #e45260"
+      <a href="/tv/<%= show.id %>" class="text-decoration-none">
+        <div class="card h-100 shadow-sm card-hover bg-secondary border-0">
+          <img
+            src="https://image.tmdb.org/t/p/w500<%= show.poster%>"
+            class="card-img-top img-fluid"
+            style="height: 250px; object-fit: cover"
+            alt="<%= show.title %> poster"
+          />
+          <div class="card-body p-2 bg-dark">
+            <h6
+              class="card-title mb-1 fw-semibold text-truncate text-light"
+              style="font-size: 0.9rem"
             >
-              <%= genre %>
-            </span>
-            <% }) %>
+              <%= show.title %>
+            </h6>
+            <div class="mb-1">
+              <% show.genreNames.slice(0,2).forEach((genre) => { %>
+              <span
+                class="badge text-dark"
+                style="font-size: 0.65rem; background-color: #e45260"
+              >
+                <%= genre %>
+              </span>
+              <% }) %>
+            </div>
+            <p class="card-text text-light mb-0 small"><%= show.releaseDate %></p>
           </div>
-          <p class="card-text text-light mb-0 small"><%= show.releaseDate %></p>
         </div>
-      </div>
+      </a>
     </div>
     <% }) %>
   </div>
@@ -120,35 +124,37 @@
   <div class="d-flex overflow-auto pb-2 pt-2 gap-2 mb-5">
     <% trendingMovies.forEach((movie) => { %>
     <div class="flex-shrink-0" style="width: 200px">
-      <div class="card h-100 shadow-sm card-hover bg-secondary border-0">
-        <img
-          src="https://image.tmdb.org/t/p/w500<%= movie.poster%>"
-          class="card-img-top img-fluid"
-          style="height: 250px; object-fit: cover"
-          alt="<%= movie.title %> poster"
-        />
-        <div class="card-body p-2 bg-dark">
-          <h6
-            class="card-title mb-1 fw-semibold text-truncate text-light"
-            style="font-size: 0.9rem"
-          >
-            <%= movie.title %>
-          </h6>
-          <div class="mb-1">
-            <% movie.genreNames.slice(0,2).forEach((genre) => { %>
-            <span
-              class="badge text-dark"
-              style="font-size: 0.65rem; background-color: #e45260"
+      <a href="/movies/<%= movie.id %>" class="text-decoration-none">
+        <div class="card h-100 shadow-sm card-hover bg-secondary border-0">
+          <img
+            src="https://image.tmdb.org/t/p/w500<%= movie.poster%>"
+            class="card-img-top img-fluid"
+            style="height: 250px; object-fit: cover"
+            alt="<%= movie.title %> poster"
+          />
+          <div class="card-body p-2 bg-dark">
+            <h6
+              class="card-title mb-1 fw-semibold text-truncate text-light"
+              style="font-size: 0.9rem"
             >
-              <%= genre %>
-            </span>
-            <% }) %>
+              <%= movie.title %>
+            </h6>
+            <div class="mb-1">
+              <% movie.genreNames.slice(0,2).forEach((genre) => { %>
+              <span
+                class="badge text-dark"
+                style="font-size: 0.65rem; background-color: #e45260"
+              >
+                <%= genre %>
+              </span>
+              <% }) %>
+            </div>
+            <p class="card-text text-light mb-0 small">
+              <%= movie.releaseDate %>
+            </p>
           </div>
-          <p class="card-text text-light mb-0 small">
-            <%= movie.releaseDate %>
-          </p>
         </div>
-      </div>
+      </a>
     </div>
     <% }) %>
   </div>
@@ -172,35 +178,37 @@
   <div class="d-flex overflow-auto pb-2 pt-2 gap-2 mb-5">
     <% popularMovies.forEach((movie) => { %>
     <div class="flex-shrink-0" style="width: 200px">
-      <div class="card h-100 shadow-sm card-hover bg-secondary border-0">
-        <img
-          src="https://image.tmdb.org/t/p/w500<%= movie.poster%>"
-          class="card-img-top img-fluid"
-          style="height: 250px; object-fit: cover"
-          alt="<%= movie.title %> poster"
-        />
-        <div class="card-body p-2 bg-dark">
-          <h6
-            class="card-title mb-1 fw-semibold text-truncate text-light"
-            style="font-size: 0.9rem"
-          >
-            <%= movie.title %>
-          </h6>
-          <div class="mb-1">
-            <% movie.genreNames.slice(0,2).forEach((genre) => { %>
-            <span
-              class="badge text-dark"
-              style="font-size: 0.65rem; background-color: #e45260"
+      <a href="/movies/<%= movie.id %>" class="text-decoration-none">
+        <div class="card h-100 shadow-sm card-hover bg-secondary border-0">
+          <img
+            src="https://image.tmdb.org/t/p/w500<%= movie.poster%>"
+            class="card-img-top img-fluid"
+            style="height: 250px; object-fit: cover"
+            alt="<%= movie.title %> poster"
+          />
+          <div class="card-body p-2 bg-dark">
+            <h6
+              class="card-title mb-1 fw-semibold text-truncate text-light"
+              style="font-size: 0.9rem"
             >
-              <%= genre %>
-            </span>
-            <% }) %>
+              <%= movie.title %>
+            </h6>
+            <div class="mb-1">
+              <% movie.genreNames.slice(0,2).forEach((genre) => { %>
+              <span
+                class="badge text-dark"
+                style="font-size: 0.65rem; background-color: #e45260"
+              >
+                <%= genre %>
+              </span>
+              <% }) %>
+            </div>
+            <p class="card-text text-light mb-0 small">
+              <%= movie.releaseDate %>
+            </p>
           </div>
-          <p class="card-text text-light mb-0 small">
-            <%= movie.releaseDate %>
-          </p>
         </div>
-      </div>
+      </a>
     </div>
     <% }) %>
   </div>
