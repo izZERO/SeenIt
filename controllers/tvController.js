@@ -4,8 +4,7 @@ exports.tv_index_get = async (req, res) => {
   try {
     const trendingUrl =
       "https://api.themoviedb.org/3/trending/tv/day?language=en-US"
-    const popularUrl =
-      "https://api.themoviedb.org/3/tv/popular?language=en-US"
+    const popularUrl = "https://api.themoviedb.org/3/tv/popular?language=en-US"
     const options = {
       method: "GET",
       headers: {
@@ -43,7 +42,7 @@ exports.tv_index_get = async (req, res) => {
         language: show.original_language,
       }
     })
-    res.send({trendingTvShows, popularTvShows})
+    res.send({ trendingTvShows, popularTvShows })
   } catch (error) {
     console.error("An error has occurred while getting tvShows!", error.message)
   }
@@ -57,7 +56,7 @@ exports.tv_show_get = async (req, res) => {
     // Check if tvShow exists in DB
     if (tvInDatabase) {
       const tvShow = await Tv.findOne({ id: tvId })
-      return res.send(tvShow)
+      return res.render("seenIt/show/tvShow.ejs", { tvShow })
     }
 
     const url = `https://api.themoviedb.org/3/tv/${tvId}?language=en-US`
@@ -88,7 +87,7 @@ exports.tv_show_get = async (req, res) => {
 
     //Add tvShow to DB
     Tv.create(tvShow)
-    res.send(tvShow)
+    return res.render("seenIt/show/tvShow.ejs", { tvShow })
   } catch (error) {
     console.error(
       "An error has occurred while getting tvShow details!",
