@@ -51,6 +51,12 @@ app.post('/stats', upload.single('uploaded_file'), function (req, res) {
 const authRouter = require('./routes/authRouter.js')
 app.use('/auth', authRouter)
 
+// Explore Route
+const exploreRouter = require("./routes/exploreRouter")
+app.use("/", exploreRouter)
+
+app.use(isSignedIn)
+
 // Movie Route
 const movieRouter = require('./routes/movieRouter')
 app.use('/movies', movieRouter)
@@ -64,17 +70,13 @@ app.use("/tv", tvRouter)
 const listRouter = require("./routes/listRouter")
 app.use("/", listRouter)
 
-// Explore Route
-const exploreRouter = require("./routes/exploreRouter")
-app.use("/", exploreRouter)
-
 // User Route
 const userRouter = require("./routes/userRouter")
 app.use("/", userRouter)
 
 // Main Route
 app.get('/', (req, res) => {
-  res.render('index.ejs')
+  res.redirect('/explore')
 })
 
 
