@@ -1,1 +1,286 @@
-<h1>watchlist</h1>
+<%- include('../partials/header.ejs') %>
+
+<div class="px-4 py-3">
+  <!-- Page Header -->
+  <h2 class="text-light fw-bold mb-5 d-flex align-items-center gap-2">
+    <img
+      src="/images/Icons/watchListIcon.svg"
+      alt="watchlist"
+      width="55"
+      height="55"
+    />
+    My Watchlist
+  </h2>
+
+  <!-- Movies Section -->
+  <% if (movies && movies.length > 0) { %>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="text-light fw-semibold mb-0">
+      <img
+        src="/images/Icons/movieIcon.svg"
+        alt="trending"
+        width="40"
+        height="40"
+        style="margin-right: 10px"
+      />Movies (<%= movies.length %>)
+    </h4>
+    <% if (movies.length > 9) { %>
+    <button class="btn btn-outline-light btn-sm" id="toggleMovies">
+      Show More
+    </button>
+    <% } %>
+  </div>
+  <div class="row" id="moviesContainer">
+    <% movies.forEach((movie, index) => { %>
+    <div
+      class="col-lg-6 col-xl-4 mb-4 movie-item <%= index >= 9 ? 'hidden-item' : '' %>"
+    >
+      <div class="card bg-secondary border-0 h-100 card-hover">
+        <div class="row g-0 h-100">
+          <div class="col-4">
+            <img
+              src="https://image.tmdb.org/t/p/w500<%= movie.poster%>"
+              class="img-fluid h-100"
+              style="object-fit: cover; border-radius: 0.375rem 0 0 0.375rem"
+              alt="<%= movie.title %> poster"
+            />
+          </div>
+          <div class="col-8">
+            <div
+              class="card-body bg-dark h-100 d-flex flex-column"
+              style="border-radius: 0 0.375rem 0.375rem 0"
+            >
+              <h6 class="card-title text-light fw-semibold mb-2">
+                <%= movie.title %>
+              </h6>
+
+              <!-- Genres -->
+              <div class="mb-2">
+                <% if (movie.genres && movie.genres.length > 0) { %> <%
+                movie.genres.slice(0,2).forEach((genre) => { %>
+                <span
+                  class="badge text-dark me-1"
+                  style="font-size: 0.65rem; background-color: #e45260"
+                >
+                  <%= genre.name %>
+                </span>
+                <% }) %> <% } %>
+              </div>
+
+              <!-- Movie Details -->
+              <div class="card-text text-light small mb-2">
+                <!-- Release Date -->
+                <div class="mb-1">
+                  <i class="bi bi-calendar3 me-1" style="color:#e45260"></i>
+                  <%= movie.releaseDate %>
+                </div>
+
+                <!-- Duration -->
+                <% if (movie.duration) { %>
+                <div class="mb-1">
+                  <i class="bi bi-clock me-1" style="color:#e45260"></i>
+                  <%= movie.duration %> min
+                </div>
+                <% } %>
+
+                <!-- Language -->
+                <% if (movie.language) { %>
+                <div class="mb-1">
+                  <i class="bi bi-translate me-1" style="color:#e45260"></i>
+                  <%= movie.language.toUpperCase() %>
+                </div>
+                <% } %>
+
+                <!-- Status -->
+                <% if (movie.status) { %>
+                <div class="mb-1">
+                  <i class="bi bi-info-circle me-1" style="color:#e45260"></i>
+                  <span
+                    class="badge text-dark"
+                    style="font-size: 0.7rem; background-color: #e45260"
+                  >
+                    <%= movie.status %>
+                  </span>
+                </div>
+                <% } %>
+              </div>
+              <div class="mt-auto">
+                <button class="btn btn-outline-danger btn-sm">
+                  <i class="bi bi-trash" style="color:#e45260"></i> Remove
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+  <% } else { %>
+  <div class="text-center py-5">
+    <img
+      src="/images/Icons/movieIcon.svg"
+      alt="no movies"
+      width="64"
+      height="64"
+      class="opacity-50 mb-3"
+    />
+    <h5 class="text-light opacity-75">No movies in your watchlist</h5>
+    <p class="text-light mb-4">
+      Start adding movies to keep track of what you want to watch!
+    </p>
+    <a href="/explore" class="btn btn-light btn-lg" style="color: #e45260"
+      >Explore Movies</a
+    >
+  </div>
+  <% } %>
+
+  <!-- TV Shows Section -->
+  <% if (tvShows && tvShows.length > 0) { %>
+  <div class="d-flex justify-content-between align-items-center mb-3 mt-5">
+    <h4 class="text-light fw-semibold mb-0">
+      <img
+        src="/images/Icons/tvShowIcon.svg"
+        alt="trending"
+        width="40"
+        height="40"
+        style="margin-right: 10px"
+      />TV Shows (<%= tvShows.length %>)
+    </h4>
+    <% if (tvShows.length > 9) { %>
+    <button class="btn btn-outline-light btn-sm" id="toggleTvShows">
+      Show More
+    </button>
+    <% } %>
+  </div>
+  <div class="row" id="tvShowsContainer">
+    <% tvShows.forEach((show, index) => { %>
+    <div
+      class="col-lg-6 col-xl-4 mb-4 tv-item <%= index >= 9 ? 'hidden-item' : '' %>"
+    >
+      <div class="card bg-secondary border-0 h-100 card-hover">
+        <div class="row g-0 h-100">
+          <div class="col-4">
+            <img
+              src="https://image.tmdb.org/t/p/w500<%= show.poster%>"
+              class="img-fluid h-100"
+              style="object-fit: cover; border-radius: 0.375rem 0 0 0.375rem"
+              alt="<%= show.title %> poster"
+            />
+          </div>
+          <div class="col-8">
+            <div
+              class="card-body bg-dark h-100 d-flex flex-column"
+              style="border-radius: 0 0.375rem 0.375rem 0"
+            >
+              <h6 class="card-title text-light fw-semibold mb-2">
+                <%= show.title %>
+              </h6>
+
+              <!-- Genres -->
+              <div class="mb-2">
+                <% if (show.genres && show.genres.length > 0) { %> <%
+                show.genres.slice(0,2).forEach((genre) => { %>
+                <span
+                  class="badge text-dark me-1"
+                  style="font-size: 0.65rem; background-color: #e45260"
+                >
+                  <%= genre.name %>
+                </span>
+                <% }) %> <% } %>
+              </div>
+
+              <!-- Show Details -->
+              <div class="card-text text-light small mb-2">
+                <!-- Release Date -->
+                <div class="mb-1">
+                  <i class="bi bi-calendar3 me-1" style="color:#e45260"></i>
+                  <%= show.releaseDate %>
+                </div>
+
+                <!-- Language -->
+                <% if (show.language) { %>
+                <div class="mb-1">
+                  <i class="bi bi-translate me-1" style="color:#e45260"></i>
+                  <%= show.language.toUpperCase() %>
+                </div>
+                <% } %>
+
+                <!-- Number of Seasons -->
+                <% if (show.numberOfSeasons) { %>
+                <div class="mb-1">
+                  <i class="bi bi-leaf me-1" style="color:#e45260"></i>
+                  <%= show.numberOfSeasons %>
+                </div>
+                <% } %>
+
+                <!-- Number of Episodes -->
+                <% if (show.numberOfEpisodes) { %>
+                <div class="mb-1">
+                  <i class="bi bi-bookmark me-1" style="color:#e45260"></i>
+                  <%= show.numberOfEpisodes %>
+                </div>
+                <% } %>
+              </div>
+
+              <div class="mt-auto">
+                <button class="btn btn-outline-danger btn-sm">
+                  <i class="bi bi-trash"></i> Remove
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+  <% } else { %>
+  <div class="text-center py-5">
+    <img
+      src="/images/Icons/tvShowIcon.svg"
+      alt="no shows"
+      width="64"
+      height="64"
+      class="opacity-50 mb-3"
+    />
+    <h5 class="text-light opacity-75">No TV shows in your watchlist</h5>
+    <p class="text-light mb-4">
+      Start adding shows to keep track of what you want to watch!
+    </p>
+    <a href="/explore" class="btn btn-light btn-lg" style="color: #e45260"
+      >Explore TV Shows</a
+    >
+  </div>
+  <% } %>
+
+  <!-- Both are Empty -->
+  <% if ((!movies || movies.length === 0) && (!tvShows || tvShows.length === 0))
+  { %>
+  <div class="text-center py-5">
+    <img
+      src="/images/Icons/watchListIcon.svg"
+      alt="empty watchlist"
+      width="80"
+      height="80"
+      class="opacity-50 mb-4"
+    />
+    <h3 class="text-light opacity-75 mb-3">Your watchlist is empty</h3>
+    <p class="text-light mb-4">
+      Discover amazing movies and TV shows to add to your watchlist!
+    </p>
+    <a href="/explore" class="btn btn-light btn-lg" style="color: #e45260">
+      <img
+        src="/images/Icons/exploreIcon.svg"
+        alt="explore"
+        width="32"
+        height="32"
+        class="me-2"
+      />
+      Start Exploring
+    </a>
+  </div>
+  <% } %>
+</div>
+
+<%- include('../partials/footer.ejs') %>
