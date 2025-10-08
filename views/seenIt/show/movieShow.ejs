@@ -87,13 +87,34 @@
         <br />
         <div class="container-fluid d-flex justify-content-between">
           <% if (user) { %>
-          <div class="container-fluid">
-            <button
-              class="btn btn-outline-dark me-4 card-hover"
-              style="background-color: #e45260"
+          <div class="container-fluid d-flex gap-3">
+            <% if (isInWatchlist) { %>
+            <form
+              action="/watchlist?_method=DELETE"
+              method="post"
+              class="d-inline"
             >
-              <i class="bi bi-bookmark-plus me-2"></i>Add to Watchlist
-            </button>
+              <input type="hidden" name="movieId" value="<%= movie._id %>" />
+              <button class="btn btn-outline-danger card-hover" type="submit">
+                <i class="bi bi-bookmark-dash me-2"></i>Remove from Watchlist
+              </button>
+            </form>
+            <% } else { %>
+            <form
+              action="/watchlist?_method=PUT"
+              method="post"
+              class="d-inline"
+            >
+              <input type="hidden" name="movieId" value="<%= movie._id %>" />
+              <button
+                class="btn btn-outline-dark card-hover"
+                style="background-color: #e45260"
+                type="submit"
+              >
+                <i class="bi bi-bookmark-plus me-2"></i>Add to Watchlist
+              </button>
+            </form>
+            <% } %>
 
             <button class="btn btn-outline-light card-hover">
               <i class="bi bi-bookmark-heart me-2"></i>Add to Favorites

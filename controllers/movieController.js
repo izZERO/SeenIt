@@ -57,7 +57,25 @@ exports.movie_show_get = async (req, res) => {
     // Check if movie exists in DB
     if (movieInDatabase) {
       const movie = await Movie.findOne({ id: movieId })
-      return res.render("seenIt/show/movieShow.ejs", {movie})
+
+      // Check if movie is in user's watchlist
+      let isInWatchlist = false
+      if (req.session.user) {
+        const List = require("../models/List")
+        const watchlistItem = await List.findOne({
+          user: req.session.user._id,
+          isWatchList: true,
+          movie: movie._id,
+        })
+
+        if (watchlistItem) {
+          isInWatchlist = true
+        } else {
+          isInWatchlist = false
+        }
+      }
+
+      return res.render("seenIt/show/movieShow.ejs", { movie, isInWatchlist })
     }
 
     const url = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`
@@ -84,9 +102,29 @@ exports.movie_show_get = async (req, res) => {
     }
 
     // Add movie to DB
-    Movie.create(movie)
+    const savedMovie = await Movie.create(movie)
 
-    return res.render("seenIt/show/movieShow.ejs", {movie})
+    // Check if movie is in user's watchlist
+    let isInWatchlist = false
+    if (req.session.user) {
+      const List = require("../models/List")
+      const watchlistItem = await List.findOne({
+        user: req.session.user._id,
+        isWatchList: true,
+        movie: savedMovie._id,
+      })
+
+      if (watchlistItem) {
+        isInWatchlist = true
+      } else {
+        isInWatchlist = false
+      }
+    }
+
+    return res.render("seenIt/show/movieShow.ejs", {
+      movie: savedMovie,
+      isInWatchlist,
+    })
   } catch (error) {
     console.error(
       "An error has occurred while getting movie details!",

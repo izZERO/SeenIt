@@ -30,11 +30,16 @@ exports.watchList_index_get = async (req, res) => {
 
 exports.watchList_add_put = async (req, res) => {
   try {
+    const { movieId, tvId } = req.body
+    const pushQuery = movieId ? { movie: movieId } : { tv: tvId }
+
     await List.findOneAndUpdate(
       { user: req.session.user._id, isWatchList: true },
-      req.body
+      { $push: pushQuery },
+      { upsert: true }
     )
-    res.send("List Updated")
+
+    res.redirect("/watchlist")
   } catch (error) {
     console.error(
       "An error has occurred while updating the watch list!",

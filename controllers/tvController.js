@@ -52,11 +52,29 @@ exports.tv_show_get = async (req, res) => {
   try {
     const tvId = req.params.tvId
     const tvInDatabase = await Tv.exists({ id: tvId })
+    let isInWatchlist = false
 
     // Check if tvShow exists in DB
     if (tvInDatabase) {
       const tvShow = await Tv.findOne({ id: tvId })
-      return res.render("seenIt/show/tvShow.ejs", { tvShow })
+
+      // Check if TV show is in user's watchlist
+      if (req.session.user) {
+        const List = require("../models/List")
+        const watchlistItem = await List.findOne({
+          user: req.session.user._id,
+          isWatchList: true,
+          tv: tvShow._id,
+        })
+
+        if (watchlistItem) {
+          isInWatchlist = true
+        } else {
+          isInWatchlist = false
+        }
+      }
+
+      return res.render("seenIt/show/tvShow.ejs", { tvShow, isInWatchlist })
     }
 
     const url = `https://api.themoviedb.org/3/tv/${tvId}?language=en-US`
@@ -85,9 +103,29 @@ exports.tv_show_get = async (req, res) => {
       numberOfEpisodes: data.number_of_episodes,
     }
 
-    //Add tvShow to DB
-    Tv.create(tvShow)
-    return res.render("seenIt/show/tvShow.ejs", { tvShow })
+    // Add tvShow to DB
+    const savedTvShow = await Tv.create(tvShow)
+
+    // Check if TV show is in user's watchlist
+    if (req.session.user) {
+      const List = require("../models/List")
+      const watchlistItem = await List.findOne({
+        user: req.session.user._id,
+        isWatchList: true,
+        tv: savedTvShow._id,
+      })
+
+      if (watchlistItem) {
+        isInWatchlist = true
+      } else {
+        isInWatchlist = false
+      }
+    }
+
+    return res.render("seenIt/show/tvShow.ejs", {
+      tvShow: savedTvShow,
+      isInWatchlist,
+    })
   } catch (error) {
     console.error(
       "An error has occurred while getting tvShow details!",
