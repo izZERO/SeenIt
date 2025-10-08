@@ -69,11 +69,34 @@ exports.auth_signout_get = async (req, res) => {
     console.error('an error has occurred signing out  user!', error.message)
   }
 }
-// exports.auth_updatePassword_put = async => {
-//   try {
-// const user = await User.findById(r)
-//   } catch (error) {
 
-//   }
-// }
+
+exports.auth_updatePassword_put = async (req, res) => {
+  try {
+const user = await User.findById(req.params.id)
+if (!user) {
+  return res.send('no user with that id')
+}
+  const validPassword = bcrypt.compareSync(
+    req.body.oldPassword,
+    user.password
+
+  )
+  if (!validPassword) {
+    return res.send('your password was not correct, try again')
+  }
+  if (req.body.newPassword !== req.body.confirmPassword) {
+    return res.send('password and confirm password must match')
+  }
+  const hashedPassword = bcrypt.hashSync(req.body.newPassword, 10)
+  user.password = hashedPassword
+  await user.save()
+  res.render('./auth/confirm.ejs', {user})
+  } catch (error) {
+  console.error(
+      "An error has occurred updating a user's password!",
+      error.message
+    )
+  }
+}
 
