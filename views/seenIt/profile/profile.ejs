@@ -1,35 +1,236 @@
 <%- include('../../partials/header.ejs') %>
 
 <div class="profile-page">
-  <% if (user.coverPicture) { %>
-  <img class="cover-image" src="/uploads/<%= user.coverPicture %>" alt="Cover Picture" />
-  <% } else { %>
-  <img class="cover-image" src="/images/cover.jpg" alt="Default Cover" />
-  <% } %> 
-  
-  <% if (user.profilePicture) { %>
-  <img
-    class="profile-image"
-    src="/uploads/<%= user.profilePicture %>"
-    alt="Profile Picture"
-  />
-  <% } else { %>
-  <img class="profile-image" src="/images/pfp.svg" alt="Default Profile" />
-  <% } %>
-  
-  <div class="user-nme">
-    <h1><%= user.username %></h1>
+  <!-- Cover Photo Section -->
+  <div class="position-relative">
+    <% if (user.coverPicture) { %>
+    <img
+      class="cover-image w-100"
+      src="/uploads/<%= user.coverPicture %>"
+      alt="Cover Picture"
+      style="height: 300px; object-fit: cover"
+    />
+    <% } else { %>
+    <img
+      class="cover-image w-100"
+      src="/images/Profile/cover.jpg"
+      alt="Default Cover"
+      style="height: 300px; object-fit: cover"
+    />
+    <% } %>
+
+    <!-- Profile Picture Overlay -->
+    <div class="position-absolute" style="bottom: -60px; left: 30px">
+      <% if (user.profilePicture) { %>
+      <img
+        class="profile-image rounded-circle border border-4 border-dark"
+        src="/uploads/<%= user.profilePicture %>"
+        alt="Profile Picture"
+        style="width: 120px; height: 120px; object-fit: cover"
+      />
+      <% } else { %>
+      <img
+        class="profile-image rounded-circle border border-4 border-dark"
+        src="/images/Profile/pfp.svg"
+        alt="Default Profile"
+        style="width: 120px; height: 120px; object-fit: cover"
+      />
+      <% } %>
+    </div>
+
+    <!-- Edit Button -->
+    <div class="position-absolute" style="top: 20px; right: 20px">
+      <a
+        class="btn btn-outline-light card-hover px-4"
+        href="/profile/edit"
+        style="background-color: rgba(0, 0, 0, 0.6); border-color: #e45260"
+      >
+        <i class="bi bi-pencil-square me-2"></i>Edit Profile
+      </a>
+    </div>
   </div>
-  
-  <a class="edit-btn card-hover" href="/profile/edit">Edit</a>
-  
-  <div class="flw-style">
-    <h2>Following</h2>
-    <ul>
-      <% user.following.forEach(f => { %>
-      <li><%= f %></li>
-      <% }) %>
-    </ul>
+
+  <!-- Profile Info Section -->
+  <div class="container-fluid px-4 mt-5 pt-3">
+    <div class="row">
+      <!-- Left Column - User Info -->
+      <div class="col-md-4">
+        <div class="mb-4">
+          <h2 class="text-light fw-bold mb-2"><%= user.username %></h2>
+
+          <!-- Stats Cards -->
+          <div class="row g-2 mb-4">
+            <div class="col-6">
+              <div class="card bg-dark border-secondary text-center">
+                <div class="card-body py-3">
+                  <h5 class="text-light mb-0">
+                    <%= user.followers ? user.followers.length : 0 %>
+                  </h5>
+                  <small class="text-muted">Followers</small>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="card bg-dark border-secondary text-center">
+                <div class="card-body py-3">
+                  <h5 class="text-light mb-0">
+                    <%= user.following ? user.following.length : 0 %>
+                  </h5>
+                  <small class="text-muted">Following</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Links -->
+          <div class="d-grid gap-2">
+            <a href="/watchlist" class="btn btn-outline-light card-hover">
+              <img
+                src="/images/Icons/watchListIcon.svg"
+                alt="watchlist"
+                width="20"
+                height="20"
+                class="me-2"
+              />
+              My Watchlist
+            </a>
+            <a href="/favouritelist" class="btn btn-outline-light card-hover">
+              <i class="bi bi-heart-fill me-2" style="color: #e45260"></i>
+              My Favorites
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column - Lists and Info -->
+      <div class="col-md-8">
+        <div class="row">
+          <!-- Custom Lists Section -->
+          <div class="col-12 mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h4 class="text-light fw-semibold mb-0">
+                <i class="bi bi-collection me-2" style="color: #e45260"></i>
+                My Custom Lists
+              </h4>
+              <button class="btn btn-sm btn-outline-light card-hover">
+                <i class="bi bi-plus-circle me-1"></i>Create List
+              </button>
+            </div>
+
+            <% if (user.customLists && user.customLists.length > 0) { %>
+            <div class="row g-3">
+              <% user.customLists.forEach(list => { %>
+              <div class="col-md-6 col-lg-4">
+                <div class="card bg-dark border-secondary card-hover h-100">
+                  <div class="card-body">
+                    <div
+                      class="d-flex justify-content-between align-items-start mb-2"
+                    >
+                      <h6 class="text-light mb-0"><%= list.title %></h6>
+                      <div class="dropdown">
+                        <button
+                          class="btn btn-sm btn-outline-secondary dropdown-toggle"
+                          type="button"
+                          data-bs-toggle="dropdown"
+                        >
+                          <i class="bi bi-three-dots"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                          <li><a class="dropdown-item" href="#">Edit</a></li>
+                          <li>
+                            <a class="dropdown-item text-danger" href="#"
+                              >Delete</a
+                            >
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <p class="text-muted small mb-2">
+                      <%= (list.movie.length + list.tv.length) %> items
+                    </p>
+                    <div class="d-flex gap-1 mb-3">
+                      <% if (list.movie.length > 0) { %>
+                      <span class="badge bg-secondary">
+                        <%= list.movie.length %> Movies
+                      </span>
+                      <% } %> <% if (list.tv.length > 0) { %>
+                      <span class="badge bg-secondary">
+                        <%= list.tv.length %> TV Shows
+                      </span>
+                      <% } %>
+                    </div>
+                    <a
+                      href="/list/<%= list._id %>"
+                      class="btn btn-sm btn-outline-light w-100"
+                    >
+                      View List
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <% }) %>
+            </div>
+            <% } else { %>
+            <div class="card bg-dark border-secondary">
+              <div class="card-body text-center py-5">
+                <i
+                  class="bi bi-collection text-muted mb-3"
+                  style="font-size: 3rem"
+                ></i>
+                <h5 class="text-light mb-2">No Custom Lists Yet</h5>
+                <p class="text-muted mb-3">
+                  Create your first custom list to organize your favorite movies
+                  and TV shows!
+                </p>
+                <button class="btn btn-outline-light card-hover">
+                  <i class="bi bi-plus-circle me-2"></i>Create Your First List
+                </button>
+              </div>
+            </div>
+            <% } %>
+          </div>
+
+          <!-- Following Section (if any) -->
+          <% if (user.following && user.following.length > 0) { %>
+          <div class="col-12 mb-4">
+            <h4 class="text-light fw-semibold mb-3">
+              <i class="bi bi-people-fill me-2" style="color: #e45260"></i>
+              Following (<%= user.following.length %>)
+            </h4>
+            <div class="card bg-dark border-secondary">
+              <div class="card-body">
+                <div class="row g-2">
+                  <% user.following.slice(0, 6).forEach(userId => { %>
+                  <div class="col-md-4">
+                    <div class="d-flex align-items-center">
+                      <div
+                        class="rounded-circle bg-secondary d-flex align-items-center justify-content-center me-2"
+                        style="width: 30px; height: 30px"
+                      >
+                        <i
+                          class="bi bi-person-fill text-light"
+                          style="font-size: 0.8rem"
+                        ></i>
+                      </div>
+                      <small class="text-light">User <%= userId %></small>
+                    </div>
+                  </div>
+                  <% }) %>
+                </div>
+                <% if (user.following.length > 6) { %>
+                <div class="text-center mt-3">
+                  <button class="btn btn-sm btn-outline-secondary">
+                    View All
+                  </button>
+                </div>
+                <% } %>
+              </div>
+            </div>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 

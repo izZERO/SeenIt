@@ -1,19 +1,157 @@
 <%- include('../../partials/header.ejs') %>
 
-<div class="auth-page">
-  <h2>Edit Profile</h2>
-  <form action="/profile/edit" method="POST" enctype="multipart/form-data">
-    <label>username:</label>
-    <input class="auth-input card-hover" type="text" name="username" value="<%= user.username %>" required />
+<div class="profile-page">
+  <div class="container-fluid px-4 py-4">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <!-- Header -->
+        <div class="d-flex align-items-center justify-content-between mb-4">
+          <h2 class="text-light fw-bold mb-0">
+            <i class="bi bi-pencil-square me-2" style="color: #e45260"></i>
+            Edit Profile
+          </h2>
+          <a href="/profile" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-2"></i>Back to Profile
+          </a>
+        </div>
 
-    <label>profile Picture:</label>
-    <input class="auth-input card-hover" type="file" class="form-control-file" name="profile_Picture" />
+        <!-- Current Profile Preview -->
+        <div class="card bg-dark border-secondary mb-4">
+          <div class="card-body">
+            <h5 class="text-light mb-3">Current Profile</h5>
+            <div class="d-flex align-items-center">
+              <% if (user.profilePicture) { %>
+              <img
+                src="/uploads/<%= user.profilePicture %>"
+                alt="Current Profile"
+                class="rounded-circle me-3"
+                style="width: 60px; height: 60px; object-fit: cover"
+              />
+              <% } else { %>
+              <img
+                src="/images/Profile/pfp.svg"
+                alt="Default Profile"
+                class="rounded-circle me-3"
+                style="width: 60px; height: 60px; object-fit: cover"
+              />
+              <% } %>
+              <div>
+                <h6 class="text-light mb-0"><%= user.username %></h6>
+                <small class="text-muted">Current username</small>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    <label>cover Picture:</label>
-    <input class="auth-input card-hover" type="file" class="form-control-file" name="cover_Picture" />
-    <button class="btn-style card-hover" type="submit">Update</button>
-  </form>
-  <a href="/auth/<%= user._id %>/update-password" class="">change password</a>
+        <!-- Edit Form -->
+        <div class="card bg-dark border-secondary">
+          <div class="card-body">
+            <form
+              action="/profile/edit"
+              method="POST"
+              enctype="multipart/form-data"
+            >
+              <!-- Username Field -->
+              <div class="mb-4">
+                <label for="username" class="form-label text-light fw-semibold">
+                  <i class="bi bi-person me-2" style="color: #e45260"></i
+                  >Username
+                </label>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  class="form-control bg-secondary text-light border-secondary card-hover"
+                  value="<%= user.username %>"
+                  required
+                />
+                <small class="text-muted"
+                  >Choose a unique username for your profile</small
+                >
+              </div>
+
+              <!-- Profile Picture Field -->
+              <div class="mb-4">
+                <label
+                  for="profile_Picture"
+                  class="form-label text-light fw-semibold"
+                >
+                  <i class="bi bi-image me-2" style="color: #e45260"></i>Profile
+                  Picture
+                </label>
+                <input
+                  type="file"
+                  id="profile_Picture"
+                  name="profile_Picture"
+                  class="form-control bg-secondary text-light border-secondary card-hover"
+                  accept="image/*"
+                />
+                <small class="text-muted"
+                  >Upload a new profile picture (JPG, PNG, GIF)</small
+                >
+              </div>
+
+              <!-- Cover Picture Field -->
+              <div class="mb-4">
+                <label
+                  for="cover_Picture"
+                  class="form-label text-light fw-semibold"
+                >
+                  <i class="bi bi-images me-2" style="color: #e45260"></i>Cover
+                  Picture
+                </label>
+                <input
+                  type="file"
+                  id="cover_Picture"
+                  name="cover_Picture"
+                  class="form-control bg-secondary text-light border-secondary card-hover"
+                  accept="image/*"
+                />
+                <small class="text-muted"
+                  >Upload a new cover photo for your profile</small
+                >
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="d-grid gap-2 d-md-flex justify-content-md-between">
+                <button
+                  type="submit"
+                  class="btn btn-outline-light card-hover px-4"
+                  style="background-color: #e45260; border-color: #e45260"
+                >
+                  <i class="bi bi-check-circle me-2"></i>Update Profile
+                </button>
+                <a
+                  href="/auth/<%= user._id %>/update-password"
+                  class="btn btn-outline-secondary card-hover"
+                >
+                  <i class="bi bi-key me-2"></i>Change Password
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Additional Options -->
+        <div class="card bg-dark border-secondary mt-4">
+          <div class="card-body">
+            <h6 class="text-light mb-3">Account Settings</h6>
+            <div class="d-grid gap-2">
+              <a href="/profile" class="btn btn-outline-light card-hover">
+                <i class="bi bi-eye me-2"></i>View Public Profile
+              </a>
+              <a href="/watchlist" class="btn btn-outline-light card-hover">
+                <i class="bi bi-bookmark me-2"></i>Manage Watchlist
+              </a>
+              <a href="/favouritelist" class="btn btn-outline-light card-hover">
+                <i class="bi bi-heart me-2"></i>Manage Favorites
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <%- include('../../partials/footer.ejs') %>
