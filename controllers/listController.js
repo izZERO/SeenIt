@@ -84,11 +84,16 @@ exports.favList_index_get = async (req, res) => {
 
 exports.favList_add_put = async (req, res) => {
   try {
+    const { movieId, tvId } = req.body
+    const pushQuery = movieId ? { movie: movieId } : { tv: tvId }
+
     await List.findOneAndUpdate(
       { user: req.session.user._id, isFavList: true },
-      req.body
+      { $push: pushQuery },
+      { upsert: true }
     )
-    res.send("List Updated")
+
+    res.redirect("/profile")
   } catch (error) {
     console.error(
       "An error has occurred while updating the favourite list!",
@@ -107,7 +112,7 @@ exports.favList_deleteItem_delete = async (req, res) => {
       { $pull: pullQuery }
     )
 
-    res.send("Item removed from favourite list")
+    res.redirect("back")
   } catch (error) {
     console.error(
       "An error has occurred while deleting from the favourite list!",

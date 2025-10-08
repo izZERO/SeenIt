@@ -53,12 +53,13 @@ exports.tv_show_get = async (req, res) => {
     const tvId = req.params.tvId
     const tvInDatabase = await Tv.exists({ id: tvId })
     let isInWatchlist = false
+    let isInFavorites = false
 
     // Check if tvShow exists in DB
     if (tvInDatabase) {
       const tvShow = await Tv.findOne({ id: tvId })
 
-      // Check if TV show is in user's watchlist
+      // Check if TV show is in user's watchlist and favorites
       if (req.session.user) {
         const List = require("../models/List")
         const watchlistItem = await List.findOne({
@@ -67,14 +68,30 @@ exports.tv_show_get = async (req, res) => {
           tv: tvShow._id,
         })
 
+        const favoritesItem = await List.findOne({
+          user: req.session.user._id,
+          isFavList: true,
+          tv: tvShow._id,
+        })
+
         if (watchlistItem) {
           isInWatchlist = true
         } else {
           isInWatchlist = false
         }
+
+        if (favoritesItem) {
+          isInFavorites = true
+        } else {
+          isInFavorites = false
+        }
       }
 
-      return res.render("seenIt/show/tvShow.ejs", { tvShow, isInWatchlist })
+      return res.render("seenIt/show/tvShow.ejs", {
+        tvShow,
+        isInWatchlist,
+        isInFavorites,
+      })
     }
 
     const url = `https://api.themoviedb.org/3/tv/${tvId}?language=en-US`
@@ -106,7 +123,7 @@ exports.tv_show_get = async (req, res) => {
     // Add tvShow to DB
     const savedTvShow = await Tv.create(tvShow)
 
-    // Check if TV show is in user's watchlist
+    // Check if TV show is in user's watchlist and favorites
     if (req.session.user) {
       const List = require("../models/List")
       const watchlistItem = await List.findOne({
@@ -115,16 +132,29 @@ exports.tv_show_get = async (req, res) => {
         tv: savedTvShow._id,
       })
 
+      const favoritesItem = await List.findOne({
+        user: req.session.user._id,
+        isFavList: true,
+        tv: savedTvShow._id,
+      })
+
       if (watchlistItem) {
         isInWatchlist = true
       } else {
         isInWatchlist = false
+      }
+
+      if (favoritesItem) {
+        isInFavorites = true
+      } else {
+        isInFavorites = false
       }
     }
 
     return res.render("seenIt/show/tvShow.ejs", {
       tvShow: savedTvShow,
       isInWatchlist,
+      isInFavorites,
     })
   } catch (error) {
     console.error(
