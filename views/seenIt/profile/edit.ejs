@@ -1,0 +1,17 @@
+<%- include('../../partials/header.ejs') %>
+
+<h2>Edit Profile</h2>
+<form action="/profile/edit" method="POST" enctype="multipart/form-data">
+  <label>username:</label>
+  <input type="text" name="username" value="<%= user.username %>" required />
+
+  <label>profile Picture:</label>
+  <input type="file" class="form-control-file" name="profile_Picture" />
+
+  <label>cover Picture:</label>
+  <input type="file" class="form-control-file" name="cover_Picture" />
+  <button type="submit">Update</button>
+</form>
+<label">change password:</label>
+<a href="/auth/<%= user._id %>/update-password" class="button">change password</a>
+<%- include('../../partials/footer.ejs') %>

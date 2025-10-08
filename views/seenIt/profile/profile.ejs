@@ -1,0 +1,33 @@
+<%- include('../../partials/header.ejs') %>
+
+<a href="/profile/edit">Edit</a>
+
+<% if (user.coverPicture) { %>
+  <img src="/uploads/<%= user.coverPicture %>" alt="Cover Picture" />
+<% } else { %>
+  <img src="/images/cover.jpg" alt="Default Cover" />
+<% } %>
+
+<h1><%= user.username %></h1>
+
+<% if (user.profilePicture) { %>
+  <img src="/uploads/<%= user.profilePicture %>" alt="Profile Picture" />
+<% } else { %>
+  <img src="/images/pfp.svg" alt="Default Profile" />
+<% } %>
+
+<h2>Followers</h2>
+<ul>
+  <% user.followers.forEach(f => { %>
+    <li><%= f %></li>
+  <% }) %>
+</ul>
+
+<h2>Following</h2>
+<ul>
+  <% user.following.forEach(f => { %>
+    <li><%= f %></li>
+  <% }) %>
+</ul>
+
+<%- include('../../partials/footer.ejs') %>

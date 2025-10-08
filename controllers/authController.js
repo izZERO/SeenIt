@@ -2,9 +2,8 @@ const bcrypt = require('bcrypt')
 const User = require('../models/User.js')
 const List = require("../models/List")
 
-
-exports.auth_signup_get = async (req,res) => {
-  res.render("auth/sign-up.ejs")
+exports.auth_signup_get = async (req, res) => {
+  res.render('auth/sign-up.ejs')
 }
 
 exports.auth_signup_post = async (req, res) => {
@@ -63,23 +62,26 @@ exports.auth_signup_post = async (req, res) => {
   }
 }
 
-exports.auth_signin_get = async (req,res) => {
-  res.render("auth/sign-in.ejs")
+exports.auth_signin_get = async (req, res) => {
+  res.render('auth/sign-in.ejs')
 }
 
 exports.auth_signin_post = async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.email })
-    if (!user) {
+    const userInDatabase = await User.findOne({ email: req.body.email })
+    if (!userInDatabase) {
       return res.send('no user has been found')
     }
-    const validPassword = bcrypt.compareSync(req.body.password, user.password)
+    const validPassword = bcrypt.compareSync(
+      req.body.password,
+      userInDatabase.password
+    )
     if (!validPassword) {
       return res.send('wrong password! please try again.')
     }
     req.session.user = {
-      email: user.email,
-      _id: user._id
+      username: userInDatabase.username,
+      _id: userInDatabase._id
     }
     res.redirect(`/explore`)
   } catch (error) {
@@ -92,6 +94,37 @@ exports.auth_signout_get = async (req, res) => {
 req.session.destroy()
 res.redirect('/explore')
   } catch (error) {
-console.error('an error has occurred signing out  user!', error.message)
+    console.error('an error has occurred signing out  user!', error.message)
   }
 }
+
+
+exports.auth_updatePassword_put = async (req, res) => {
+  try {
+const user = await User.findById(req.params.id)
+if (!user) {
+  return res.send('no user with that id')
+}
+  const validPassword = bcrypt.compareSync(
+    req.body.oldPassword,
+    user.password
+
+  )
+  if (!validPassword) {
+    return res.send('your password was not correct, try again')
+  }
+  if (req.body.newPassword !== req.body.confirmPassword) {
+    return res.send('password and confirm password must match')
+  }
+  const hashedPassword = bcrypt.hashSync(req.body.newPassword, 10)
+  user.password = hashedPassword
+  await user.save()
+  res.render('./auth/confirm.ejs', {user})
+  } catch (error) {
+  console.error(
+      "An error has occurred updating a user's password!",
+      error.message
+    )
+  }
+}
+
