@@ -1,4 +1,13 @@
-/* Explore Page */
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+main, nav {
+  background-color: #181818;
+}
+
+
+/* Explore Page
 #explore-main {
   display: flex;
 }
@@ -16,4 +25,43 @@
 
 .explore-posters {
   width: 100px;
+} */
+
+.card-hover {
+  transition: transform 0.2s ease-in-out;
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Custom Scrollbar Styling for Dark Theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1e1e;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #6c757d;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #adb5bd;
+}
+
+::-webkit-scrollbar-corner {
+  background: #1e1e1e;
+}
+
+/* Firefox Scrollbar Styling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #6c757d #1e1e1e;
 }

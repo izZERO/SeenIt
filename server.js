@@ -57,8 +57,16 @@ app.use('/movies', movieRouter)
 
 
 // Tv Route
-const tvRouter = require('./routes/tvRouter')
-app.use('/tv', tvRouter)
+const tvRouter = require("./routes/tvRouter")
+app.use("/tv", tvRouter)
+
+// List Route
+const listRouter = require("./routes/listRouter")
+app.use("/", listRouter)
+
+// Explore Route
+const exploreRouter = require("./routes/exploreRouter")
+app.use("/", exploreRouter)
 
 // Main Route
 app.get('/', (req, res) => {
@@ -67,14 +75,6 @@ app.get('/', (req, res) => {
 
 
 
-// Explore Route
-// const { explore_index_get } = require("./controllers/exploreController.js")
-// app.get('/explore', explore_index_get)
-const exploreRouter = require('./routes/exploreRouter')
-app.use('/', exploreRouter)
-
-const userRouter = require('./routes/userRouter')
-app.use('/', userRouter)
 
 app.listen(PORT, () => {
   console.log(`Running Server on Port ${PORT} . . . `)

@@ -1,5 +1,6 @@
 const Movie = require("../models/Movie")
 const Tv = require("../models/Tv")
+const User = require("../models/User")
 const { movieGenreMapping, tvGenreMapping } = require("../utils")
 
 exports.explore_index_get = async (req, res) => {
@@ -102,12 +103,54 @@ exports.explore_index_get = async (req, res) => {
       genreNames: tvGenreMapping(show.genres),
     }))
     res.render(
-      "seenIt/explore.ejs",
+      "seenIt/explore/explore.ejs",
       data /*{ trendingMovies, popularMovies, trendingTvShows, popularTvShows } */
     )
   } catch (error) {
     console.error(
       "An error has occurred while getting the explore page data!",
+      error.message
+    )
+  }
+}
+
+exports.explore_search_get = async (req, res) => {
+  try {
+    res.render("seenIt/explore/search.ejs")
+  } catch (error) {
+    console.error(
+      "An error has occurred while getting the explore search!",
+      error.message
+    )
+  }
+}
+
+exports.explore_search_get = async (req, res) => {
+  try {
+    const movieUrl = `https://api.themoviedb.org/3/search/movie?query=${req.params.query}`
+    const tvUrl = `https://api.themoviedb.org/3/search/tv?query=${req.params.query}`
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${process.env.API_KEY}`,
+      },
+    }
+    // Movies Search
+    const movieResponse = await fetch(movieUrl, options)
+    const movieData = await movieResponse.json()
+
+    // Tv Search
+    const tvResponse = await fetch(tvUrl, options)
+    const tvData = await tvResponse.json()
+
+    // User Search
+    const users = await User.find({ username: { "$regex": req.params.query, "$options": "i" } })
+
+    res.send({ movieData, tvData, users })
+  } catch (error) {
+    console.error(
+      "An error has occurred while getting your search!",
       error.message
     )
   }

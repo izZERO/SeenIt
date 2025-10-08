@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SeenIt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="/style.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
@@ -18,19 +24,56 @@
       integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
       crossorigin="anonymous"
     ></script>
-    <nav>
-      <a href="/">Home</a>
 
-      <% if (!user) { %>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+      <div class="container-fluid pb-0" style="margin: -15px 0">
+        <!-- Logo on the left -->
+        <a class="navbar-brand d-flex align-items-center" href="/">
+          <img src="/images/Icons/seenItLogo.png" alt="SeenIt" height="90" />
+        </a>
 
-      <a href="/auth/sign-up">Sign Up</a>
-      <a href="/auth/sign-in">Sign In</a>
+        <!-- Navigation links on the right -->
+        <div class="d-flex align-items-center gap-3">
+          <% if (!user) { %>
+          <a href="/auth/sign-up" class="nav-link text-light">Sign Up</a>
+          <a href="/auth/sign-in" class="nav-link text-light">Sign In</a>
+          <% } else { %>
+          <!-- Watchlist Icon -->
+          <a href="/watchlist" class="nav-link p-2" title="Watchlist">
+            <img
+              src="/images/Icons/watchListIcon.svg"
+              alt="Watchlist"
+              width="32"
+              height="32"
+            />
+          </a>
 
-      <% } else { %>
+          <!-- Explore Icon -->
+          <a href="/explore" class="nav-link p-2" title="Explore">
+            <img
+              src="/images/Icons/exploreIcon.svg"
+              alt="Explore"
+              width="32"
+              height="32"
+            />
+          </a>
 
-      <a href="/auth/sign-out">Sign Out</a>
-
-      <% } %>
+          <!-- Profile Picture -->
+          <a href="/profile" class="nav-link p-1" title="Profile">
+            <img
+              src="/images/Profile/pfp.svg"
+              alt="Profile"
+              width="32"
+              height="32"
+              class="rounded-circle"
+            />
+          </a>
+          <!-- signout -->
+          <a href="/auth/sign-out" class="nav-link text-light small ms-2"
+            >Sign Out</a
+          >
+          <% } %>
+        </div>
+      </div>
     </nav>
     <main>
-

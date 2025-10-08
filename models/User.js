@@ -33,11 +33,11 @@ const userSchema = new mongoose.Schema(
       },
     ],
     favList: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Object,
       ref: "List",
     },
     watchList: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Object,
       ref: "List",
     },
     customLists: [
