@@ -61,6 +61,7 @@ exports.movie_show_get = async (req, res) => {
       // Check if movie is in user's watchlist and favorites
       let isInWatchlist = false
       let isInFavorites = false
+      let customLists = []
       if (req.session.user) {
         const List = require("../models/List")
         const watchlistItem = await List.findOne({
@@ -73,6 +74,13 @@ exports.movie_show_get = async (req, res) => {
           user: req.session.user._id,
           isFavList: true,
           movie: movie._id,
+        })
+
+        // Get user's custom lists
+        customLists = await List.find({
+          user: req.session.user._id,
+          isWatchList: { $ne: true },
+          isFavList: { $ne: true },
         })
 
         if (watchlistItem) {
@@ -92,6 +100,7 @@ exports.movie_show_get = async (req, res) => {
         movie,
         isInWatchlist,
         isInFavorites,
+        customLists,
       })
     }
 
@@ -124,6 +133,7 @@ exports.movie_show_get = async (req, res) => {
     // Check if movie is in user's watchlist and favorites
     let isInWatchlist = false
     let isInFavorites = false
+    let customLists = []
     if (req.session.user) {
       const List = require("../models/List")
       const watchlistItem = await List.findOne({
@@ -136,6 +146,13 @@ exports.movie_show_get = async (req, res) => {
         user: req.session.user._id,
         isFavList: true,
         movie: savedMovie._id,
+      })
+
+      // Get user's custom lists
+      customLists = await List.find({
+        user: req.session.user._id,
+        isWatchList: { $ne: true },
+        isFavList: { $ne: true },
       })
 
       if (watchlistItem) {
@@ -155,6 +172,7 @@ exports.movie_show_get = async (req, res) => {
       movie: savedMovie,
       isInWatchlist,
       isInFavorites,
+      customLists,
     })
   } catch (error) {
     console.error(

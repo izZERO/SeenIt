@@ -137,6 +137,39 @@
               </button>
             </form>
             <% } %>
+
+            <!-- Add to Custom List Dropdown -->
+            <% if (customLists && customLists.length > 0) { %>
+            <div class="dropdown">
+              <button
+                class="btn btn-outline-secondary dropdown-toggle card-hover"
+                type="button"
+                data-bs-toggle="dropdown"
+              >
+                <i class="bi bi-plus-circle me-2"></i>Add to List
+              </button>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <% customLists.forEach(list => { %>
+                <li>
+                  <form
+                    action="/list/<%= list._id %>?_method=PUT"
+                    method="post"
+                    class="d-inline w-100"
+                  >
+                    <input
+                      type="hidden"
+                      name="movieId"
+                      value="<%= movie._id %>"
+                    />
+                    <button type="submit" class="dropdown-item">
+                      <i class="bi bi-collection me-2"></i><%= list.title %>
+                    </button>
+                  </form>
+                </li>
+                <% }) %>
+              </ul>
+            </div>
+            <% } %>
           </div>
           <% } %>
 

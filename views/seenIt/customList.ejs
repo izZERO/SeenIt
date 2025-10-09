@@ -1,0 +1,243 @@
+<%- include('../partials/header.ejs') %>
+
+<div class="px-4 py-3">
+  <!-- Page Header -->
+  <div class="d-flex justify-content-between align-items-center mb-5">
+    <h2 class="text-light fw-bold d-flex align-items-center gap-2">
+      <i class="bi bi-collection" style="color: #e45260; font-size: 2.5rem"></i>
+      <%= list.title %>
+    </h2>
+    <div class="d-flex gap-2">
+      <!-- Delete List Button -->
+      <form
+        action="/list/<%= list._id %>?_method=DELETE"
+        method="post"
+        class="d-inline"
+      >
+        <button type="submit" class="btn btn-outline-danger">
+          <i class="bi bi-trash me-2"></i>Delete List
+        </button>
+      </form>
+      <a href="/profile" class="btn btn-outline-light">
+        <i class="bi bi-arrow-left me-2"></i>Back to Profile
+      </a>
+    </div>
+  </div>
+
+  <!-- Movies Section -->
+  <% if (movies && movies.length > 0) { %>
+  <h4 class="text-light fw-semibold mb-3">
+    <img
+      src="/images/Icons/movieIcon.svg"
+      alt="movies"
+      width="40"
+      height="40"
+      style="margin-right: 10px"
+    />Movies (<%= movies.length %>)
+  </h4>
+  <div class="row" id="moviesContainer">
+    <% movies.forEach((movie) => { %>
+    <div class="col-lg-6 col-xl-4 mb-4">
+      <div class="card bg-secondary border-0 h-100 card-hover">
+        <div class="row g-0 h-100">
+          <div class="col-4">
+            <img
+              src="https://image.tmdb.org/t/p/w500<%= movie.poster%>"
+              class="img-fluid h-100"
+              style="object-fit: cover; border-radius: 0.375rem 0 0 0.375rem"
+              alt="<%= movie.title %> poster"
+            />
+          </div>
+          <div class="col-8">
+            <div
+              class="card-body bg-dark h-100 d-flex flex-column"
+              style="border-radius: 0 0.375rem 0.375rem 0"
+            >
+              <h6 class="card-title text-light fw-semibold mb-2">
+                <%= movie.title %>
+              </h6>
+
+              <!-- Genres -->
+              <div class="mb-2">
+                <% if (movie.genres && movie.genres.length > 0) { %> <%
+                movie.genres.slice(0,2).forEach((genre) => { %>
+                <span
+                  class="badge text-dark me-1"
+                  style="font-size: 0.65rem; background-color: #e45260"
+                >
+                  <%= genre.name %>
+                </span>
+                <% }) %> <% } %>
+              </div>
+
+              <!-- Movie Details -->
+              <div class="card-text text-light small mb-2">
+                <!-- Release Date -->
+                <div class="mb-1">
+                  <i class="bi bi-calendar3 me-1" style="color: #e45260"></i>
+                  <%= movie.releaseDate %>
+                </div>
+
+                <!-- Duration -->
+                <% if (movie.duration) { %>
+                <div class="mb-1">
+                  <i class="bi bi-clock me-1" style="color: #e45260"></i>
+                  <%= movie.duration %> min
+                </div>
+                <% } %>
+
+                <!-- Language -->
+                <% if (movie.language) { %>
+                <div class="mb-1">
+                  <i class="bi bi-translate me-1" style="color: #e45260"></i>
+                  <%= movie.language.toUpperCase() %>
+                </div>
+                <% } %>
+              </div>
+              <div class="mt-auto d-flex gap-2">
+                <form
+                  action="/list/<%= list._id %>/<%= movie._id %>?_method=DELETE"
+                  method="post"
+                  class="d-inline"
+                >
+                  <button class="btn btn-outline-danger btn-sm">
+                    <i class="bi bi-trash" style="color: #e45260"></i> Remove
+                  </button>
+                </form>
+                <a
+                  href="/movies/<%= movie.id %>"
+                  class="btn btn-outline-secondary btn-sm"
+                >
+                  <i class="bi bi-info-circle text-light"></i> Details
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+  <% } %>
+
+  <!-- TV Shows Section -->
+  <% if (tvShows && tvShows.length > 0) { %>
+  <h4 class="text-light fw-semibold mb-3 mt-5">
+    <img
+      src="/images/Icons/tvShowIcon.svg"
+      alt="tv shows"
+      width="40"
+      height="40"
+      style="margin-right: 10px"
+    />TV Shows (<%= tvShows.length %>)
+  </h4>
+  <div class="row" id="tvShowsContainer">
+    <% tvShows.forEach((show) => { %>
+    <div class="col-lg-6 col-xl-4 mb-4">
+      <div class="card bg-secondary border-0 h-100 card-hover">
+        <div class="row g-0 h-100">
+          <div class="col-4">
+            <img
+              src="https://image.tmdb.org/t/p/w500<%= show.poster%>"
+              class="img-fluid h-100"
+              style="object-fit: cover; border-radius: 0.375rem 0 0 0.375rem"
+              alt="<%= show.title %> poster"
+            />
+          </div>
+          <div class="col-8">
+            <div
+              class="card-body bg-dark h-100 d-flex flex-column"
+              style="border-radius: 0 0.375rem 0.375rem 0"
+            >
+              <h6 class="card-title text-light fw-semibold mb-2">
+                <%= show.title %>
+              </h6>
+
+              <!-- Genres -->
+              <div class="mb-2">
+                <% if (show.genres && show.genres.length > 0) { %> <%
+                show.genres.slice(0,2).forEach((genre) => { %>
+                <span
+                  class="badge text-dark me-1"
+                  style="font-size: 0.65rem; background-color: #e45260"
+                >
+                  <%= genre.name %>
+                </span>
+                <% }) %> <% } %>
+              </div>
+
+              <!-- Show Details -->
+              <div class="card-text text-light small mb-2">
+                <!-- Release Date -->
+                <div class="mb-1">
+                  <i class="bi bi-calendar3 me-1" style="color: #e45260"></i>
+                  <%= show.releaseDate %>
+                </div>
+
+                <!-- Language -->
+                <% if (show.language) { %>
+                <div class="mb-1">
+                  <i class="bi bi-translate me-1" style="color: #e45260"></i>
+                  <%= show.language.toUpperCase() %>
+                </div>
+                <% } %>
+
+                <!-- Number of Seasons -->
+                <% if (show.numberOfSeasons) { %>
+                <div class="mb-1">
+                  <i class="bi bi-leaf me-1" style="color: #e45260"></i>
+                  <%= show.numberOfSeasons %> Seasons
+                </div>
+                <% } %>
+              </div>
+
+              <div class="mt-auto d-flex gap-2">
+                <form
+                  action="/list/<%= list._id %>/<%= show._id %>?_method=DELETE"
+                  method="post"
+                  class="d-inline"
+                >
+                  <button class="btn btn-outline-danger btn-sm">
+                    <i class="bi bi-trash"></i> Remove
+                  </button>
+                </form>
+                <a
+                  href="/tv/<%= show.id %>"
+                  class="btn btn-outline-secondary btn-sm"
+                >
+                  <i class="bi bi-info-circle text-light"></i> Details
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+  <% } %>
+
+  <!-- Empty State -->
+  <% if ((!movies || movies.length === 0) && (!tvShows || tvShows.length === 0))
+  { %>
+  <div class="text-center py-5">
+    <i class="bi bi-collection text-muted mb-4" style="font-size: 4rem"></i>
+    <h3 class="text-light opacity-75 mb-3">Your list is empty</h3>
+    <p class="text-light mb-4">
+      Start adding movies and TV shows to "<%= list.title %>"!
+    </p>
+    <a href="/explore" class="btn btn-light btn-lg" style="color: #e45260">
+      <img
+        src="/images/Icons/exploreIcon.svg"
+        alt="explore"
+        width="32"
+        height="32"
+        class="me-2"
+      />
+      Explore Content
+    </a>
+  </div>
+  <% } %>
+</div>
+
+<%- include('../partials/footer.ejs') %>

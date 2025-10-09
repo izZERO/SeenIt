@@ -7,8 +7,8 @@ exports.profile_index_get = async (req, res) => {
     // Get custom lists (excluding watchlist and favorites)
     const customLists = await List.find({
       user: user._id,
-      isWatchList: false,
-      isFavList: false,
+      isWatchList: { $ne: true },
+      isFavList: { $ne: true },
     })
       .populate("movie")
       .populate("tv")

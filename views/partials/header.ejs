@@ -63,6 +63,16 @@
 
           <!-- Profile Picture -->
           <a href="/profile" class="nav-link p-1" title="Profile">
+            <% if (user.profilePicture) { %>
+            <img
+              src="/uploads/<%= user.profilePicture %>"
+              alt="Profile"
+              width="50"
+              height="50"
+              class="rounded-circle"
+              style="object-fit: cover"
+            />
+            <% } else { %>
             <img
               src="/images/Profile/pfp.svg"
               alt="Profile"
@@ -70,13 +80,12 @@
               height="32"
               class="rounded-circle"
             />
+            <% } %>
           </a>
-          <!-- signout -->
-          <a href="/auth/sign-out" class="nav-link text-light small ms-2"
-            >Sign Out</a
-          >
           <% } %>
         </div>
       </div>
     </nav>
-    <main>
+    <main></main>
+  </body>
+</html>

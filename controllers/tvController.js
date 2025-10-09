@@ -60,6 +60,7 @@ exports.tv_show_get = async (req, res) => {
       const tvShow = await Tv.findOne({ id: tvId })
 
       // Check if TV show is in user's watchlist and favorites
+      let customLists = []
       if (req.session.user) {
         const List = require("../models/List")
         const watchlistItem = await List.findOne({
@@ -72,6 +73,13 @@ exports.tv_show_get = async (req, res) => {
           user: req.session.user._id,
           isFavList: true,
           tv: tvShow._id,
+        })
+
+        // Get user's custom lists
+        customLists = await List.find({
+          user: req.session.user._id,
+          isWatchList: { $ne: true },
+          isFavList: { $ne: true },
         })
 
         if (watchlistItem) {
@@ -91,6 +99,7 @@ exports.tv_show_get = async (req, res) => {
         tvShow,
         isInWatchlist,
         isInFavorites,
+        customLists,
       })
     }
 
@@ -124,6 +133,7 @@ exports.tv_show_get = async (req, res) => {
     const savedTvShow = await Tv.create(tvShow)
 
     // Check if TV show is in user's watchlist and favorites
+    let customLists = []
     if (req.session.user) {
       const List = require("../models/List")
       const watchlistItem = await List.findOne({
@@ -136,6 +146,13 @@ exports.tv_show_get = async (req, res) => {
         user: req.session.user._id,
         isFavList: true,
         tv: savedTvShow._id,
+      })
+
+      // Get user's custom lists
+      customLists = await List.find({
+        user: req.session.user._id,
+        isWatchList: { $ne: true },
+        isFavList: { $ne: true },
       })
 
       if (watchlistItem) {
@@ -155,6 +172,7 @@ exports.tv_show_get = async (req, res) => {
       tvShow: savedTvShow,
       isInWatchlist,
       isInFavorites,
+      customLists,
     })
   } catch (error) {
     console.error(
