@@ -54,9 +54,7 @@ app.use("/auth", authRouter)
 const exploreRouter = require("./routes/exploreRouter")
 app.use("/", exploreRouter)
 
-app.use(isSignedIn)
-
-// Movie Route
+// Movie Route 
 const movieRouter = require("./routes/movieRouter")
 app.use("/movies", movieRouter)
 
@@ -64,8 +62,10 @@ app.use("/movies", movieRouter)
 const tvRouter = require("./routes/tvRouter")
 app.use("/tv", tvRouter)
 
+app.use(isSignedIn)
+
 // List Route
-const listRouter = require("./routes/listRouter")
+const listRouter = require("./routes/ListRouter")
 app.use("/", listRouter)
 
 // User Route
