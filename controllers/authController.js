@@ -56,7 +56,7 @@ exports.auth_signup_post = async (req, res) => {
       favList:  await List.findOne({user: userId, isFavList: true})
     })
 
-    res.send('Thanks for signing up!')
+    res.redirect("/auth/sign-in")
   } catch (error) {
     console.error('An error has occurred registering a user!', error.message)
   }
